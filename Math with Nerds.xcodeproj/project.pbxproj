@@ -1,0 +1,519 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F7D83D0B17F9F7B800EE1AB2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D0A17F9F7B800EE1AB2 /* Foundation.framework */; };
+		F7D83D0D17F9F7B800EE1AB2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D0C17F9F7B800EE1AB2 /* CoreGraphics.framework */; };
+		F7D83D0F17F9F7B800EE1AB2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D0E17F9F7B800EE1AB2 /* UIKit.framework */; };
+		F7D83D1117F9F7B800EE1AB2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D1017F9F7B800EE1AB2 /* CoreData.framework */; };
+		F7D83D1717F9F7B800EE1AB2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F7D83D1517F9F7B800EE1AB2 /* InfoPlist.strings */; };
+		F7D83D1917F9F7B800EE1AB2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D1817F9F7B800EE1AB2 /* main.m */; };
+		F7D83D1D17F9F7B800EE1AB2 /* DFSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D1C17F9F7B800EE1AB2 /* DFSAppDelegate.m */; };
+		F7D83D2017F9F7B900EE1AB2 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7D83D1E17F9F7B900EE1AB2 /* Main_iPhone.storyboard */; };
+		F7D83D2317F9F7B900EE1AB2 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7D83D2117F9F7B900EE1AB2 /* Main_iPad.storyboard */; };
+		F7D83D2617F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D2417F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodeld */; };
+		F7D83D2917F9F7B900EE1AB2 /* DFSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D2817F9F7B900EE1AB2 /* DFSMasterViewController.m */; };
+		F7D83D2C17F9F7B900EE1AB2 /* DFSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D2B17F9F7B900EE1AB2 /* DFSDetailViewController.m */; };
+		F7D83D2E17F9F7B900EE1AB2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7D83D2D17F9F7B900EE1AB2 /* Images.xcassets */; };
+		F7D83D3517F9F7B900EE1AB2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D3417F9F7B900EE1AB2 /* XCTest.framework */; };
+		F7D83D3617F9F7B900EE1AB2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D0A17F9F7B800EE1AB2 /* Foundation.framework */; };
+		F7D83D3717F9F7B900EE1AB2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D0E17F9F7B800EE1AB2 /* UIKit.framework */; };
+		F7D83D3817F9F7B900EE1AB2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D1017F9F7B800EE1AB2 /* CoreData.framework */; };
+		F7D83D4017F9F7B900EE1AB2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F7D83D3E17F9F7B900EE1AB2 /* InfoPlist.strings */; };
+		F7D83D4217F9F7B900EE1AB2 /* Math_with_NerdsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D4117F9F7B900EE1AB2 /* Math_with_NerdsTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F7D83D3917F9F7B900EE1AB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F7D83CFF17F9F7B800EE1AB2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F7D83D0617F9F7B800EE1AB2;
+			remoteInfo = "Math with Nerds";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F7D83D0717F9F7B800EE1AB2 /* Math with Nerds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Math with Nerds.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7D83D0A17F9F7B800EE1AB2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F7D83D0C17F9F7B800EE1AB2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F7D83D0E17F9F7B800EE1AB2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F7D83D1017F9F7B800EE1AB2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F7D83D1417F9F7B800EE1AB2 /* Math with Nerds-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Math with Nerds-Info.plist"; sourceTree = "<group>"; };
+		F7D83D1617F9F7B800EE1AB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F7D83D1817F9F7B800EE1AB2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F7D83D1A17F9F7B800EE1AB2 /* Math with Nerds-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Math with Nerds-Prefix.pch"; sourceTree = "<group>"; };
+		F7D83D1B17F9F7B800EE1AB2 /* DFSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFSAppDelegate.h; sourceTree = "<group>"; };
+		F7D83D1C17F9F7B800EE1AB2 /* DFSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFSAppDelegate.m; sourceTree = "<group>"; };
+		F7D83D1F17F9F7B900EE1AB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		F7D83D2217F9F7B900EE1AB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		F7D83D2517F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Math_with_Nerds.xcdatamodel; sourceTree = "<group>"; };
+		F7D83D2717F9F7B900EE1AB2 /* DFSMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFSMasterViewController.h; sourceTree = "<group>"; };
+		F7D83D2817F9F7B900EE1AB2 /* DFSMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFSMasterViewController.m; sourceTree = "<group>"; };
+		F7D83D2A17F9F7B900EE1AB2 /* DFSDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFSDetailViewController.h; sourceTree = "<group>"; };
+		F7D83D2B17F9F7B900EE1AB2 /* DFSDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFSDetailViewController.m; sourceTree = "<group>"; };
+		F7D83D2D17F9F7B900EE1AB2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F7D83D3317F9F7B900EE1AB2 /* Math with NerdsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Math with NerdsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7D83D3417F9F7B900EE1AB2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		F7D83D3D17F9F7B900EE1AB2 /* Math with NerdsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Math with NerdsTests-Info.plist"; sourceTree = "<group>"; };
+		F7D83D3F17F9F7B900EE1AB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F7D83D4117F9F7B900EE1AB2 /* Math_with_NerdsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Math_with_NerdsTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F7D83D0417F9F7B800EE1AB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7D83D0D17F9F7B800EE1AB2 /* CoreGraphics.framework in Frameworks */,
+				F7D83D1117F9F7B800EE1AB2 /* CoreData.framework in Frameworks */,
+				F7D83D0F17F9F7B800EE1AB2 /* UIKit.framework in Frameworks */,
+				F7D83D0B17F9F7B800EE1AB2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7D83D3017F9F7B900EE1AB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7D83D3517F9F7B900EE1AB2 /* XCTest.framework in Frameworks */,
+				F7D83D3817F9F7B900EE1AB2 /* CoreData.framework in Frameworks */,
+				F7D83D3717F9F7B900EE1AB2 /* UIKit.framework in Frameworks */,
+				F7D83D3617F9F7B900EE1AB2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F7D83CFE17F9F7B800EE1AB2 = {
+			isa = PBXGroup;
+			children = (
+				F7D83D1217F9F7B800EE1AB2 /* Math with Nerds */,
+				F7D83D3B17F9F7B900EE1AB2 /* Math with NerdsTests */,
+				F7D83D0917F9F7B800EE1AB2 /* Frameworks */,
+				F7D83D0817F9F7B800EE1AB2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F7D83D0817F9F7B800EE1AB2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F7D83D0717F9F7B800EE1AB2 /* Math with Nerds.app */,
+				F7D83D3317F9F7B900EE1AB2 /* Math with NerdsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F7D83D0917F9F7B800EE1AB2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7D83D0A17F9F7B800EE1AB2 /* Foundation.framework */,
+				F7D83D0C17F9F7B800EE1AB2 /* CoreGraphics.framework */,
+				F7D83D0E17F9F7B800EE1AB2 /* UIKit.framework */,
+				F7D83D1017F9F7B800EE1AB2 /* CoreData.framework */,
+				F7D83D3417F9F7B900EE1AB2 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F7D83D1217F9F7B800EE1AB2 /* Math with Nerds */ = {
+			isa = PBXGroup;
+			children = (
+				F7D83D1B17F9F7B800EE1AB2 /* DFSAppDelegate.h */,
+				F7D83D1C17F9F7B800EE1AB2 /* DFSAppDelegate.m */,
+				F7D83D1E17F9F7B900EE1AB2 /* Main_iPhone.storyboard */,
+				F7D83D2117F9F7B900EE1AB2 /* Main_iPad.storyboard */,
+				F7D83D2717F9F7B900EE1AB2 /* DFSMasterViewController.h */,
+				F7D83D2817F9F7B900EE1AB2 /* DFSMasterViewController.m */,
+				F7D83D2A17F9F7B900EE1AB2 /* DFSDetailViewController.h */,
+				F7D83D2B17F9F7B900EE1AB2 /* DFSDetailViewController.m */,
+				F7D83D2D17F9F7B900EE1AB2 /* Images.xcassets */,
+				F7D83D2417F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodeld */,
+				F7D83D1317F9F7B800EE1AB2 /* Supporting Files */,
+			);
+			path = "Math with Nerds";
+			sourceTree = "<group>";
+		};
+		F7D83D1317F9F7B800EE1AB2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F7D83D1417F9F7B800EE1AB2 /* Math with Nerds-Info.plist */,
+				F7D83D1517F9F7B800EE1AB2 /* InfoPlist.strings */,
+				F7D83D1817F9F7B800EE1AB2 /* main.m */,
+				F7D83D1A17F9F7B800EE1AB2 /* Math with Nerds-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F7D83D3B17F9F7B900EE1AB2 /* Math with NerdsTests */ = {
+			isa = PBXGroup;
+			children = (
+				F7D83D4117F9F7B900EE1AB2 /* Math_with_NerdsTests.m */,
+				F7D83D3C17F9F7B900EE1AB2 /* Supporting Files */,
+			);
+			path = "Math with NerdsTests";
+			sourceTree = "<group>";
+		};
+		F7D83D3C17F9F7B900EE1AB2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F7D83D3D17F9F7B900EE1AB2 /* Math with NerdsTests-Info.plist */,
+				F7D83D3E17F9F7B900EE1AB2 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F7D83D0617F9F7B800EE1AB2 /* Math with Nerds */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7D83D4517F9F7B900EE1AB2 /* Build configuration list for PBXNativeTarget "Math with Nerds" */;
+			buildPhases = (
+				F7D83D0317F9F7B800EE1AB2 /* Sources */,
+				F7D83D0417F9F7B800EE1AB2 /* Frameworks */,
+				F7D83D0517F9F7B800EE1AB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Math with Nerds";
+			productName = "Math with Nerds";
+			productReference = F7D83D0717F9F7B800EE1AB2 /* Math with Nerds.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F7D83D3217F9F7B900EE1AB2 /* Math with NerdsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7D83D4817F9F7B900EE1AB2 /* Build configuration list for PBXNativeTarget "Math with NerdsTests" */;
+			buildPhases = (
+				F7D83D2F17F9F7B900EE1AB2 /* Sources */,
+				F7D83D3017F9F7B900EE1AB2 /* Frameworks */,
+				F7D83D3117F9F7B900EE1AB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F7D83D3A17F9F7B900EE1AB2 /* PBXTargetDependency */,
+			);
+			name = "Math with NerdsTests";
+			productName = "Math with NerdsTests";
+			productReference = F7D83D3317F9F7B900EE1AB2 /* Math with NerdsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F7D83CFF17F9F7B800EE1AB2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = DFS;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Chris Bougher";
+				TargetAttributes = {
+					F7D83D3217F9F7B900EE1AB2 = {
+						TestTargetID = F7D83D0617F9F7B800EE1AB2;
+					};
+				};
+			};
+			buildConfigurationList = F7D83D0217F9F7B800EE1AB2 /* Build configuration list for PBXProject "Math with Nerds" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F7D83CFE17F9F7B800EE1AB2;
+			productRefGroup = F7D83D0817F9F7B800EE1AB2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F7D83D0617F9F7B800EE1AB2 /* Math with Nerds */,
+				F7D83D3217F9F7B900EE1AB2 /* Math with NerdsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F7D83D0517F9F7B800EE1AB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7D83D2317F9F7B900EE1AB2 /* Main_iPad.storyboard in Resources */,
+				F7D83D2E17F9F7B900EE1AB2 /* Images.xcassets in Resources */,
+				F7D83D2017F9F7B900EE1AB2 /* Main_iPhone.storyboard in Resources */,
+				F7D83D1717F9F7B800EE1AB2 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7D83D3117F9F7B900EE1AB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7D83D4017F9F7B900EE1AB2 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F7D83D0317F9F7B800EE1AB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7D83D2917F9F7B900EE1AB2 /* DFSMasterViewController.m in Sources */,
+				F7D83D2C17F9F7B900EE1AB2 /* DFSDetailViewController.m in Sources */,
+				F7D83D1D17F9F7B800EE1AB2 /* DFSAppDelegate.m in Sources */,
+				F7D83D2617F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodeld in Sources */,
+				F7D83D1917F9F7B800EE1AB2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7D83D2F17F9F7B900EE1AB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7D83D4217F9F7B900EE1AB2 /* Math_with_NerdsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F7D83D3A17F9F7B900EE1AB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F7D83D0617F9F7B800EE1AB2 /* Math with Nerds */;
+			targetProxy = F7D83D3917F9F7B900EE1AB2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F7D83D1517F9F7B800EE1AB2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F7D83D1617F9F7B800EE1AB2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F7D83D1E17F9F7B900EE1AB2 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F7D83D1F17F9F7B900EE1AB2 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		F7D83D2117F9F7B900EE1AB2 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F7D83D2217F9F7B900EE1AB2 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		F7D83D3E17F9F7B900EE1AB2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F7D83D3F17F9F7B900EE1AB2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F7D83D4317F9F7B900EE1AB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F7D83D4417F9F7B900EE1AB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F7D83D4617F9F7B900EE1AB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Math with Nerds/Math with Nerds-Prefix.pch";
+				INFOPLIST_FILE = "Math with Nerds/Math with Nerds-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F7D83D4717F9F7B900EE1AB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Math with Nerds/Math with Nerds-Prefix.pch";
+				INFOPLIST_FILE = "Math with Nerds/Math with Nerds-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		F7D83D4917F9F7B900EE1AB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Math with Nerds.app/Math with Nerds";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Math with Nerds/Math with Nerds-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Math with NerdsTests/Math with NerdsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		F7D83D4A17F9F7B900EE1AB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Math with Nerds.app/Math with Nerds";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Math with Nerds/Math with Nerds-Prefix.pch";
+				INFOPLIST_FILE = "Math with NerdsTests/Math with NerdsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F7D83D0217F9F7B800EE1AB2 /* Build configuration list for PBXProject "Math with Nerds" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7D83D4317F9F7B900EE1AB2 /* Debug */,
+				F7D83D4417F9F7B900EE1AB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7D83D4517F9F7B900EE1AB2 /* Build configuration list for PBXNativeTarget "Math with Nerds" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7D83D4617F9F7B900EE1AB2 /* Debug */,
+				F7D83D4717F9F7B900EE1AB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F7D83D4817F9F7B900EE1AB2 /* Build configuration list for PBXNativeTarget "Math with NerdsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7D83D4917F9F7B900EE1AB2 /* Debug */,
+				F7D83D4A17F9F7B900EE1AB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F7D83D2417F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F7D83D2517F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodel */,
+			);
+			currentVersion = F7D83D2517F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodel */;
+			path = Math_with_Nerds.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = F7D83CFF17F9F7B800EE1AB2 /* Project object */;
+}
