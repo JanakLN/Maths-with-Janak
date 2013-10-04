@@ -26,6 +26,7 @@
 		F7D83D3817F9F7B900EE1AB2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D1017F9F7B800EE1AB2 /* CoreData.framework */; };
 		F7D83D4017F9F7B900EE1AB2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F7D83D3E17F9F7B900EE1AB2 /* InfoPlist.strings */; };
 		F7D83D4217F9F7B900EE1AB2 /* Math_with_NerdsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D4117F9F7B900EE1AB2 /* Math_with_NerdsTests.m */; };
+		F7D83D4C17F9F7CE00EE1AB2 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D4B17F9F7CE00EE1AB2 /* GameKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		F7D83D3D17F9F7B900EE1AB2 /* Math with NerdsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Math with NerdsTests-Info.plist"; sourceTree = "<group>"; };
 		F7D83D3F17F9F7B900EE1AB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F7D83D4117F9F7B900EE1AB2 /* Math_with_NerdsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Math_with_NerdsTests.m; sourceTree = "<group>"; };
+		F7D83D4B17F9F7CE00EE1AB2 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7D83D4C17F9F7CE00EE1AB2 /* GameKit.framework in Frameworks */,
 				F7D83D0D17F9F7B800EE1AB2 /* CoreGraphics.framework in Frameworks */,
 				F7D83D1117F9F7B800EE1AB2 /* CoreData.framework in Frameworks */,
 				F7D83D0F17F9F7B800EE1AB2 /* UIKit.framework in Frameworks */,
@@ -113,6 +116,7 @@
 		F7D83D0917F9F7B800EE1AB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7D83D4B17F9F7CE00EE1AB2 /* GameKit.framework */,
 				F7D83D0A17F9F7B800EE1AB2 /* Foundation.framework */,
 				F7D83D0C17F9F7B800EE1AB2 /* CoreGraphics.framework */,
 				F7D83D0E17F9F7B800EE1AB2 /* UIKit.framework */,
