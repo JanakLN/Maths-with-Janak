@@ -16,6 +16,7 @@
 		F7E948B317FF0D73004EA37A /* libInfixCalculator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E9489B17FF0D73004EA37A /* libInfixCalculator.a */; };
 		F7E948B917FF0D73004EA37A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F7E948B717FF0D73004EA37A /* InfoPlist.strings */; };
 		F7E948BB17FF0D74004EA37A /* InfixCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E948BA17FF0D73004EA37A /* InfixCalculatorTests.m */; };
+		F7E948C617FF2E9A004EA37A /* NSMutableArray+stack.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E948C517FF2E9A004EA37A /* NSMutableArray+stack.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		F7E948B617FF0D73004EA37A /* InfixCalculatorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InfixCalculatorTests-Info.plist"; sourceTree = "<group>"; };
 		F7E948B817FF0D73004EA37A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F7E948BA17FF0D73004EA37A /* InfixCalculatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfixCalculatorTests.m; sourceTree = "<group>"; };
+		F7E948C417FF2E9A004EA37A /* NSMutableArray+stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+stack.h"; sourceTree = "<group>"; };
+		F7E948C517FF2E9A004EA37A /* NSMutableArray+stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+stack.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,8 @@
 				F7E948A317FF0D73004EA37A /* InfixCalculator.h */,
 				F7E948A517FF0D73004EA37A /* InfixCalculator.m */,
 				F7E948A117FF0D73004EA37A /* Supporting Files */,
+				F7E948C417FF2E9A004EA37A /* NSMutableArray+stack.h */,
+				F7E948C517FF2E9A004EA37A /* NSMutableArray+stack.m */,
 			);
 			path = InfixCalculator;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7E948C617FF2E9A004EA37A /* NSMutableArray+stack.m in Sources */,
 				F7E948A617FF0D73004EA37A /* InfixCalculator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +374,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "InfixCalculatorTests/InfixCalculatorTests-Info.plist";
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -385,6 +392,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfixCalculator/InfixCalculator-Prefix.pch";
 				INFOPLIST_FILE = "InfixCalculatorTests/InfixCalculatorTests-Info.plist";
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -409,6 +417,7 @@
 				F7E948C017FF0D74004EA37A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F7E948C117FF0D74004EA37A /* Build configuration list for PBXNativeTarget "InfixCalculatorTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +426,7 @@
 				F7E948C317FF0D74004EA37A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
