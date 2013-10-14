@@ -157,7 +157,7 @@ int const k_PRECEDENCE_PARANTHESIS = 4;
 				while (operandStack.count > 0 && ![(NSString *)operandStack.peek isEqualToString:@"("]) {
 					[output push:operandStack.pop];
 				}
-				operandStack.pop;
+				[operandStack pop];
 			} else if(operandStack.count > 0){
 				if(([token isEqualToString:@"("] && [(NSString *)operandStack.peek isEqualToString:@"("]) || (![token isEqualToString:@"("] && [self operatorToPrecendence:operandStack.peek] >= [self operatorToPrecendence:token])){
 					while (operandStack.count > 0 && ![(NSString *)operandStack.peek isEqualToString:@"("]) {
