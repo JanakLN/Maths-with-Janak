@@ -9,6 +9,7 @@
 #import "DFSGame.h"
 #import "DFSTile.h"
 #import "DFSBoardSpace.h"
+#import "DFSEquation.h"
 
 #define ROWS 15
 #define COLUMNS 15
@@ -19,7 +20,8 @@
             player2 = _player2,
             currentPlayer = _currentPlayer,
             tilePool = _tilePool,
-            gameBoard = _gameBoard;
+            gameBoard = _gameBoard,
+		    gameIsOver = _gameIsOver;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -31,6 +33,7 @@
 		_currentPlayer = [aDecoder decodeObjectForKey:@"_currentPlayer"];
 		_tilePool = [[aDecoder decodeObjectForKey:@"_tilePool"] mutableCopy];
 		_gameBoard = [aDecoder decodeObjectForKey:@"_gameBoard"];
+		_gameIsOver = [aDecoder decodeBoolForKey:@"_gameIsOver"];
     }
 	
     return self;
@@ -43,11 +46,15 @@
 	[aCoder encodeObject:_currentPlayer forKey:@"_currentPlayer"];
 	[aCoder encodeObject:_tilePool forKey:@"_tilePool"];
 	[aCoder encodeObject:_gameBoard forKey:@"_gameBoard"];
+	[aCoder encodeBool:_gameIsOver forKey:@"_gameIsOver"];
 }
 
 - (id)initNewGameWithPayer1:(DFSPlayer *)player1 andPlayer2:(DFSPlayer *)player2
 {
 	if(self = [super init]){
+		
+		// game just started
+		_gameIsOver = NO;
 		
 		// save players
 		_player1 = player1;
@@ -164,6 +171,8 @@
 
 - (BOOL)passTurnForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
 {
+	if (self.gameIsOver) return NO;
+	
 	// must be this players turn
 	if (player != self.currentPlayer) {
 		*errorString = @"You are not the current player";
@@ -177,11 +186,16 @@
 		}
 	}
 	
+	// TODO: check for game end
+	
+
 	return YES;
 }
 
 - (BOOL)swapTiles:(NSArray *)tiles ForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
 {
+	if (self.gameIsOver) return NO;
+
 	// must be this players turn
 	if (player != self.currentPlayer) {
 		*errorString = @"You are not the current player";
@@ -207,11 +221,87 @@
 	[self.tilePool addObjectsFromArray:tiles];
 	[player.tileSet addObjectsFromArray:newTiles];
 	
+	// TODO: check for game end
+
 	return YES;
+}
+
+#define EMPTY_SPACE 0
+#define FILLED_SPACE 1
+
+- (NSArray *)getAllEquations
+{
+	NSMutableArray *equations = [[NSMutableArray alloc] init];
+	int lastSpace = EMPTY_SPACE;
+	
+	DFSEquation *eq = nil;
+	
+	// get the rows
+	for (int i=0; i<ROWS; i++) {
+		for (int j=0; j<COLUMNS; j++) {
+			DFSBoardSpace *space = (DFSBoardSpace *)[self.gameBoard objectAtRow:i andColumn:j];
+			if (space.tile) {
+				// found a new equation
+				if (lastSpace == EMPTY_SPACE) {
+					eq = [[DFSEquation alloc] initWithBoardSpaces:[NSArray arrayWithObject:space]];
+					lastSpace = FILLED_SPACE;
+				// add to current equation
+				} else {
+					[eq addSpace:space];
+				}
+			} else {
+				if (lastSpace == FILLED_SPACE) {
+					lastSpace = EMPTY_SPACE;
+					if (eq.spaces.count > 1) [equations addObject:eq];
+					eq = nil;
+				}
+			}
+		}
+		// get the last equation on this row
+		if (lastSpace == FILLED_SPACE) {
+			lastSpace = EMPTY_SPACE;
+			if (eq.spaces.count > 1) [equations addObject:eq];
+			eq = nil;
+		}
+	}
+	
+	// get the columns
+	for (int i=0; i<COLUMNS; i++) {
+		for (int j=0; j<ROWS; j++) {
+			DFSBoardSpace *space = (DFSBoardSpace *)[self.gameBoard objectAtRow:j andColumn:i];
+			if (space.tile) {
+				// found a new equation
+				if (lastSpace == EMPTY_SPACE) {
+					eq = [[DFSEquation alloc] initWithBoardSpaces:[NSArray arrayWithObject:space]];
+					lastSpace = FILLED_SPACE;
+					// add to current equation
+				} else {
+					[eq addSpace:space];
+				}
+			} else {
+				if (lastSpace == FILLED_SPACE) {
+					lastSpace = EMPTY_SPACE;
+					if (eq.spaces.count > 1) [equations addObject:eq];
+					eq = nil;
+				}
+			}
+		}
+		// get the last equation on this row
+		if (lastSpace == FILLED_SPACE) {
+			lastSpace = EMPTY_SPACE;
+			if (eq.spaces.count > 1) [equations addObject:eq];
+			eq = nil;
+		}
+	}
+	
+	// all equations
+	return [equations copy];
 }
 
 - (BOOL)completeTurnForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
 {
+	if (self.gameIsOver) return NO;
+
 	// must be this players turn
 	if (player != self.currentPlayer) {
 		*errorString = @"You are not the current player";
@@ -260,7 +350,7 @@
 			break;
 		}
 	}
-	if (!oneRow && !oneCol) {
+	if ((!oneRow && !oneCol) || (oneRow && oneCol)) {
 		*errorString = @"Invalid tile placement";
 		return NO;
 	}
@@ -314,12 +404,45 @@
 	}
 	
 	// all equations valid
-	
+	NSMutableArray *addedEquations;
+	NSArray *equations = [self getAllEquations];
+	NSMutableArray *badEquations = [[NSMutableArray alloc] init];
+	for (DFSEquation *equation in equations) {
+		for (DFSBoardSpace *space in usedSpaces) {
+			if ([equations containsObject:space]) {
+				[addedEquations addObject:equation];
+				if (!equation.isValid) {
+					[badEquations addObject:equation];
+					break;
+				}
+			}
+		}
+	}
+	if(badEquations.count > 0){
+		*errorString = [badEquations.description stringByAppendingString:@" are invalid!"];
+		return NO;
+	}
 	
 	// all valid so compute score and lock tiles
+	for (DFSEquation *eq in addedEquations) {
+		self.currentPlayer.score += eq.score;
+	}
 	for (DFSBoardSpace *space in usedSpaces) {
 		space.locked = YES;
 	}
+	
+	// replenish the current user's tileset
+	for (int i=self.currentPlayer.tileSet.count; i < 7; i++) {
+		if (self.tilePool.count > 0) {
+			int index = arc4random_uniform(self.tilePool.count);
+			[self.currentPlayer.tileSet addObject:[self.tilePool objectAtIndex:index]];
+			[self.tilePool removeObjectAtIndex:index];
+		} else {
+			break;
+		}
+	}
+	
+	// TODO: check for game end
 	
 	// swap current player
 	if (self.currentPlayer == self.player1) {

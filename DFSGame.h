@@ -20,6 +20,8 @@
 @property (strong, nonatomic) NSMutableArray *tilePool;
 @property (strong, nonatomic) DFSMatrix *gameBoard;
 
+@property (nonatomic) BOOL gameIsOver;
+
 //- (NSData *)getMatchData;
 //
 //+ (DFSGame *)initWithMatchData:(NSData *)matchData;
@@ -30,5 +32,7 @@
 - (BOOL)passTurnForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
 - (BOOL)swapTiles:(NSArray *)tiles ForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
 - (BOOL)completeTurnForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
+
+- (NSArray *)getAllEquations;
 
 @end
