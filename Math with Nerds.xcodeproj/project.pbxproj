@@ -10,20 +10,12 @@
 		F70FC6A9181452C4005045B8 /* DFSEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808ABB180CA9CD00E63EE9 /* DFSEquation.m */; };
 		F70FC6AA181452F5005045B8 /* InfixCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AB5180C764A00E63EE9 /* InfixCalculator.m */; };
 		F70FC6AB181452F9005045B8 /* NSMutableArray+stack.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AB7180C764A00E63EE9 /* NSMutableArray+stack.m */; };
-		F70FC6AC181452FF005045B8 /* DFSPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AA3180ADE5E00E63EE9 /* DFSPlayer.m */; };
-		F70FC6AD18145316005045B8 /* DFSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AA6180ADEA200E63EE9 /* DFSGame.m */; };
-		F70FC6AE18145319005045B8 /* DFSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AA9180AE0A400E63EE9 /* DFSTile.m */; };
-		F70FC6AF1814531C005045B8 /* DFSMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AAC180AE13600E63EE9 /* DFSMatrix.m */; };
-		F70FC6B01814531F005045B8 /* DFSBoardSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AAF180AE51100E63EE9 /* DFSBoardSpace.m */; };
 		F7808AA4180ADE5E00E63EE9 /* DFSPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AA3180ADE5E00E63EE9 /* DFSPlayer.m */; };
 		F7808AA7180ADEA200E63EE9 /* DFSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AA6180ADEA200E63EE9 /* DFSGame.m */; };
 		F7808AAA180AE0A400E63EE9 /* DFSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AA9180AE0A400E63EE9 /* DFSTile.m */; };
 		F7808AAD180AE13600E63EE9 /* DFSMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AAC180AE13600E63EE9 /* DFSMatrix.m */; };
 		F7808AB0180AE51100E63EE9 /* DFSBoardSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AAF180AE51100E63EE9 /* DFSBoardSpace.m */; };
 		F7808AB2180C762300E63EE9 /* InfixCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AB1180C762300E63EE9 /* InfixCalculatorTests.m */; };
-		F7808AB8180C764A00E63EE9 /* InfixCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AB5180C764A00E63EE9 /* InfixCalculator.m */; };
-		F7808AB9180C764A00E63EE9 /* NSMutableArray+stack.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AB7180C764A00E63EE9 /* NSMutableArray+stack.m */; };
-		F7808ABC180CA9CD00E63EE9 /* DFSEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808ABB180CA9CD00E63EE9 /* DFSEquation.m */; };
 		F7D83D0B17F9F7B800EE1AB2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D0A17F9F7B800EE1AB2 /* Foundation.framework */; };
 		F7D83D0D17F9F7B800EE1AB2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D0C17F9F7B800EE1AB2 /* CoreGraphics.framework */; };
 		F7D83D0F17F9F7B800EE1AB2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D83D0E17F9F7B800EE1AB2 /* UIKit.framework */; };
@@ -359,16 +351,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F70FC6AF1814531C005045B8 /* DFSMatrix.m in Sources */,
-				F7808AB9180C764A00E63EE9 /* NSMutableArray+stack.m in Sources */,
-				F7808AB8180C764A00E63EE9 /* InfixCalculator.m in Sources */,
-				F70FC6AD18145316005045B8 /* DFSGame.m in Sources */,
-				F70FC6AC181452FF005045B8 /* DFSPlayer.m in Sources */,
 				F7808AB2180C762300E63EE9 /* InfixCalculatorTests.m in Sources */,
-				F7808ABC180CA9CD00E63EE9 /* DFSEquation.m in Sources */,
 				F7D83D4217F9F7B900EE1AB2 /* Math_with_NerdsTests.m in Sources */,
-				F70FC6AE18145319005045B8 /* DFSTile.m in Sources */,
-				F70FC6B01814531F005045B8 /* DFSBoardSpace.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -89,9 +89,9 @@
 
 - (void)testUnarchivingGame
 {
-	DFSGame *newGame = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
+	id newGame = [NSKeyedUnarchiver unarchiveObjectWithData:archive];
 	
-	XCTAssertTrue([newGame isKindOfClass:[DFSGame class]], @"The game was not unarchived");
+	XCTAssertTrue([newGame isKindOfClass:[DFSGame class]], @"The game was not unarchived. got %@", [newGame class]);
 }
 
 - (void)testAnInvalidEquation
@@ -177,6 +177,24 @@
 
 - (void)testGettingAllEquations
 {
+	
+//	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14
+//	0		1	+	5	=	6
+//	1				*
+//	2				1
+//	3				0			1
+//	4			4	=	3	+	1
+//	5				5			+
+//	6				0			4
+//	7							=
+//	8							1
+//	9							5	5	/	5	=	1	1
+//	10
+//	11
+//	12
+//	13
+//	14
+	
 	DFSTile *t01 = [[DFSTile alloc] initWithFaceValue:@"1" andPointValue:2];
 	DFSTile *t02 = [[DFSTile alloc] initWithFaceValue:@"+" andPointValue:3];
 	DFSTile *t03 = [[DFSTile alloc] initWithFaceValue:@"5" andPointValue:1];

@@ -14,6 +14,12 @@
 #define ROWS 15
 #define COLUMNS 15
 
+@interface DFSGame ()
+
+@property (nonatomic) int nonScoringPlayCount;
+
+@end
+
 @implementation DFSGame
 
 @synthesize player1 = _player1,
@@ -21,7 +27,9 @@
             currentPlayer = _currentPlayer,
             tilePool = _tilePool,
             gameBoard = _gameBoard,
-		    gameIsOver = _gameIsOver;
+		    gameIsOver = _gameIsOver,
+			nonScoringPlayCount = _nonScoringPlayCount
+;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -157,6 +165,22 @@
 	return self;
 }
 
+- (void)checkForGameEnd
+{
+	// game ended due to non scoring play count
+	if (self.nonScoringPlayCount > 2) {
+		self.gameIsOver = YES;
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"Game Ended" object:self userInfo:[NSDictionary dictionaryWithObject:@"NonScoringPlayCount" forKey:@"Cause"]];
+	}
+		
+	// game ended due to tile pool exhaustion
+	if (self.currentPlayer.tileSet.count == 0) {
+		self.gameIsOver = YES;
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"Game Ended" object:self userInfo:[NSDictionary dictionaryWithObject:@"LastTilePlayed" forKey:@"Cause"]];
+	}
+	
+}
+
 - (BOOL)player:(DFSPlayer *)player placeTile:(DFSTile *)tile atRow:(int)row andColumn:(int)column
 {
 	DFSBoardSpace *targetSpace = [self.gameBoard objectAtRow:row andColumn:column];
@@ -186,8 +210,9 @@
 		}
 	}
 	
-	// TODO: check for game end
-	
+	// check for game end
+	self.nonScoringPlayCount++;
+	[self checkForGameEnd];
 
 	return YES;
 }
@@ -221,7 +246,9 @@
 	[self.tilePool addObjectsFromArray:tiles];
 	[player.tileSet addObjectsFromArray:newTiles];
 	
-	// TODO: check for game end
+	// check for game end
+	self.nonScoringPlayCount++;
+	[self checkForGameEnd];
 
 	return YES;
 }
@@ -330,7 +357,7 @@
 	}
 	// at least one tile placed
 	if (usedSpaces.count < 1) {
-		*errorString = @"YOu must place at least one tile";
+		*errorString = @"You must place at least one tile";
 		return NO;
 	}
 	
@@ -442,7 +469,9 @@
 		}
 	}
 	
-	// TODO: check for game end
+	// check for game end
+	self.nonScoringPlayCount = 0;
+	[self checkForGameEnd];
 	
 	// swap current player
 	if (self.currentPlayer == self.player1) {
