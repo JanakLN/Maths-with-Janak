@@ -93,18 +93,18 @@
 	// get base score
 	for (DFSBoardSpace *space in self.boardSpaces) {
 		if (space.appliesToWord) {
-			score += space.tile.pointValue;
+			score += pow(space.tile.pointValue, space.multiplier);
 		} else {
 			score += space.tile.pointValue * space.multiplier;
 		}
 	}
 	
 	// look for word multiplier
-	for (DFSBoardSpace *space in self.boardSpaces) {
-		if (space.appliesToWord) {
-			score *= space.multiplier;
-		}
-	}
+//	for (DFSBoardSpace *space in self.boardSpaces) {
+//		if (space.appliesToWord) {
+//			score *= space.multiplier;
+//		}
+//	}
 	
 	return score;
 }

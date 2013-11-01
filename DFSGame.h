@@ -10,6 +10,7 @@
 #import "DFSPlayer.h"
 #import "DFSTile.h"
 #import "DFSMatrix.h"
+#import "DFSBoardSpace.h"
 
 @interface DFSGame : NSObject <NSCoding>
 
@@ -22,16 +23,21 @@
 
 @property (nonatomic) BOOL gameIsOver;
 
+@property (strong, nonatomic) NSDate *lastUpdate;
+@property (copy, nonatomic) NSString *lastAction;
+
 //- (NSData *)getMatchData;
 //
 //+ (DFSGame *)initWithMatchData:(NSData *)matchData;
 - (id)initNewGameWithPayer1:(DFSPlayer *)player1 andPlayer2:(DFSPlayer *)player2;
 
-- (BOOL)player:(DFSPlayer *)player placeTile:(DFSTile *)tile atRow:(int)row andColumn:(int)column;
+- (BOOL)player:(DFSPlayer *)player placeTile:(DFSTile *)tile onSpace:(DFSBoardSpace *)space;
 
 - (BOOL)passTurnForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
 - (BOOL)swapTiles:(NSArray *)tiles ForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
 - (BOOL)completeTurnForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
+- (BOOL)recallTilesForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
+- (BOOL)recallTile:(DFSTile *)tile forPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
 
 - (NSArray *)getAllEquations;
 

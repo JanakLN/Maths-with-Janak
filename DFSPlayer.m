@@ -10,13 +10,14 @@
 
 @implementation DFSPlayer
 
-@synthesize score = _score, tileSet = _tileSet;
+@synthesize score = _score, tileSet = _tileSet, name = _name;
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
 	if(self = [super init]){
 		_score = [aDecoder decodeIntForKey:@"_score"];
 		_tileSet = [aDecoder decodeObjectForKey:@"_tileSet"];
+		_name = [aDecoder decodeObjectForKey:@"_name"];
 	}
 	
 	return self;
@@ -26,25 +27,28 @@
 {
 	[aCoder encodeInt:_score forKey:@"_score"];
 	[aCoder encodeObject:_tileSet forKey:@"_tileSet"];
+	[aCoder encodeObject:_name forKey:@"_name"];
 }
 
-- (id)initWithScore:(int)score andTileSet:(NSMutableArray *)tileSet
+- (id)initWithName:(NSString *)name andScore:(int)score andTileSet:(NSMutableArray *)tileSet
 {
 	if(self= [super init]){
 		_score = score;
 		_tileSet = tileSet;
+		_name = name;
 	}
 	return self;
 }
 
 - (id)init
 {
-	return [self initWithScore:0 andTileSet:nil];
+	return [self initWithName:@"Player" andScore:0 andTileSet:nil];
 }
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"Player with score %d and tiles %@", self.score, self.tileSet];
+	//return [NSString stringWithFormat:@"Player with score %d and tiles %@", self.score, self.tileSet];
+	return self.name;
 }
 
 @end

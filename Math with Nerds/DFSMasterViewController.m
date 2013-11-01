@@ -7,8 +7,9 @@
 //
 
 #import "DFSMasterViewController.h"
-
 #import "DFSDetailViewController.h"
+#import "DFSGame.h"
+#import "DFSPlayer.h"
 
 @interface DFSMasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -48,9 +49,15 @@
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
     NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
+	DFSPlayer *player1 = [[DFSPlayer alloc] initWithName:@"Player 1" andScore:0 andTileSet:nil];
+	DFSPlayer *player2 = [[DFSPlayer alloc] initWithName:@"Player 2" andScore:0 andTileSet:nil];
+	
+	DFSGame *newGame = [[DFSGame alloc] initNewGameWithPayer1:player1 andPlayer2:player2];
+	
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    [newManagedObject setValue:[NSKeyedArchiver archivedDataWithRootObject:newGame]  forKey:@"data"];
+	[newManagedObject setValue:0 forKey:@"status"];
     
     // Save the context.
     NSError *error = nil;
@@ -114,7 +121,8 @@
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        self.detailViewController.detailItem = object;
+		DFSGame *theChosenGame = (DFSGame *)[NSKeyedUnarchiver unarchiveObjectWithData:[object valueForKey:@"data"]];
+        self.detailViewController.detailItem = theChosenGame;
     }
 }
 
@@ -123,7 +131,8 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
+		DFSGame *theChosenGame = (DFSGame *)[NSKeyedUnarchiver unarchiveObjectWithData:[object valueForKey:@"data"]];
+        [[segue destinationViewController] setDetailItem:theChosenGame];
     }
 }
 
@@ -137,14 +146,15 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Game"
+											  inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -216,20 +226,12 @@
     [self.tableView endUpdates];
 }
 
-/*
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    // In the simplest, most efficient, case, reload the table view.
-    [self.tableView reloadData];
-}
- */
-
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+	DFSGame *game = [NSKeyedUnarchiver unarchiveObjectWithData:(NSData *)[object valueForKey:@"data"]];
+	
+    cell.textLabel.text = game.description;
 }
 
 @end

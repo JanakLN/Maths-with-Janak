@@ -10,6 +10,8 @@
 		F70FC6A9181452C4005045B8 /* DFSEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808ABB180CA9CD00E63EE9 /* DFSEquation.m */; };
 		F70FC6AA181452F5005045B8 /* InfixCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AB5180C764A00E63EE9 /* InfixCalculator.m */; };
 		F70FC6AB181452F9005045B8 /* NSMutableArray+stack.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AB7180C764A00E63EE9 /* NSMutableArray+stack.m */; };
+		F759864E181D62AE0037DFDB /* DFSGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = F759864D181D62AE0037DFDB /* DFSGameBoard.m */; };
+		F7598651181DA3BF0037DFDB /* DFSTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7598650181DA3BF0037DFDB /* DFSTileView.m */; };
 		F7808AA4180ADE5E00E63EE9 /* DFSPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AA3180ADE5E00E63EE9 /* DFSPlayer.m */; };
 		F7808AA7180ADEA200E63EE9 /* DFSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AA6180ADEA200E63EE9 /* DFSGame.m */; };
 		F7808AAA180AE0A400E63EE9 /* DFSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AA9180AE0A400E63EE9 /* DFSTile.m */; };
@@ -49,6 +51,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F759864C181D62AE0037DFDB /* DFSGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFSGameBoard.h; sourceTree = "<group>"; };
+		F759864D181D62AE0037DFDB /* DFSGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFSGameBoard.m; sourceTree = "<group>"; };
+		F759864F181DA3BF0037DFDB /* DFSTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFSTileView.h; sourceTree = "<group>"; };
+		F7598650181DA3BF0037DFDB /* DFSTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFSTileView.m; sourceTree = "<group>"; };
 		F7808AA2180ADE5E00E63EE9 /* DFSPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFSPlayer.h; sourceTree = "<group>"; };
 		F7808AA3180ADE5E00E63EE9 /* DFSPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFSPlayer.m; sourceTree = "<group>"; };
 		F7808AA5180ADEA200E63EE9 /* DFSGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFSGame.h; sourceTree = "<group>"; };
@@ -190,6 +196,8 @@
 				F7D83D1B17F9F7B800EE1AB2 /* DFSAppDelegate.h */,
 				F7D83D1C17F9F7B800EE1AB2 /* DFSAppDelegate.m */,
 				F7D83D1E17F9F7B900EE1AB2 /* Main_iPhone.storyboard */,
+				F759864F181DA3BF0037DFDB /* DFSTileView.h */,
+				F7598650181DA3BF0037DFDB /* DFSTileView.m */,
 				F7D83D2117F9F7B900EE1AB2 /* Main_iPad.storyboard */,
 				F7D83D2717F9F7B900EE1AB2 /* DFSMasterViewController.h */,
 				F7D83D2817F9F7B900EE1AB2 /* DFSMasterViewController.m */,
@@ -198,6 +206,8 @@
 				F7D83D2D17F9F7B900EE1AB2 /* Images.xcassets */,
 				F7D83D2417F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodeld */,
 				F7D83D1317F9F7B800EE1AB2 /* Supporting Files */,
+				F759864C181D62AE0037DFDB /* DFSGameBoard.h */,
+				F759864D181D62AE0037DFDB /* DFSGameBoard.m */,
 			);
 			path = "Math with Nerds";
 			sourceTree = "<group>";
@@ -280,6 +290,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Chris Bougher";
 				TargetAttributes = {
+					F7D83D0617F9F7B800EE1AB2 = {
+						DevelopmentTeam = CFN7JQ76CT;
+					};
 					F7D83D3217F9F7B900EE1AB2 = {
 						TestTargetID = F7D83D0617F9F7B800EE1AB2;
 					};
@@ -331,10 +344,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F759864E181D62AE0037DFDB /* DFSGameBoard.m in Sources */,
 				F70FC6AA181452F5005045B8 /* InfixCalculator.m in Sources */,
 				F7808AAD180AE13600E63EE9 /* DFSMatrix.m in Sources */,
 				F70FC6A9181452C4005045B8 /* DFSEquation.m in Sources */,
 				F7D83D2917F9F7B900EE1AB2 /* DFSMasterViewController.m in Sources */,
+				F7598651181DA3BF0037DFDB /* DFSTileView.m in Sources */,
 				F7D83D2C17F9F7B900EE1AB2 /* DFSDetailViewController.m in Sources */,
 				F7808AA7180ADEA200E63EE9 /* DFSGame.m in Sources */,
 				F7808AA4180ADE5E00E63EE9 /* DFSPlayer.m in Sources */,
@@ -481,11 +496,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Math with Nerds/Math with Nerds-Prefix.pch";
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Math with Nerds/Math with Nerds-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -495,11 +513,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Math with Nerds/Math with Nerds-Prefix.pch";
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Math with Nerds/Math with Nerds-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

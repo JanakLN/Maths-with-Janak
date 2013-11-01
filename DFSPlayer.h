@@ -12,8 +12,9 @@
 
 @property (nonatomic) int score;
 @property (strong, nonatomic) NSMutableArray *tileSet;
+@property (strong, nonatomic) NSString *name;
 
-- (id)initWithScore:(int)score andTileSet:(NSMutableArray *)tileSet;
+- (id)initWithName:(NSString *)name andScore:(int)score andTileSet:(NSMutableArray *)tileSet;
 - (id)init;
 
 @end
