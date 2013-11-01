@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC5964F11823E67F00840421 /* README in Resources */ = {isa = PBXBuildFile; fileRef = DC5964F01823E67F00840421 /* README */; };
+		DC5964F11823E67F00840421 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DC5964F01823E67F00840421 /* README.md */; };
 		F70FC6A9181452C4005045B8 /* DFSEquation.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808ABB180CA9CD00E63EE9 /* DFSEquation.m */; };
 		F70FC6AA181452F5005045B8 /* InfixCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AB5180C764A00E63EE9 /* InfixCalculator.m */; };
 		F70FC6AB181452F9005045B8 /* NSMutableArray+stack.m in Sources */ = {isa = PBXBuildFile; fileRef = F7808AB7180C764A00E63EE9 /* NSMutableArray+stack.m */; };
@@ -52,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DC5964F01823E67F00840421 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		DC5964F01823E67F00840421 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		F759864C181D62AE0037DFDB /* DFSGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFSGameBoard.h; sourceTree = "<group>"; };
 		F759864D181D62AE0037DFDB /* DFSGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFSGameBoard.m; sourceTree = "<group>"; };
 		F759864F181DA3BF0037DFDB /* DFSTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFSTileView.h; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		F7D83CFE17F9F7B800EE1AB2 = {
 			isa = PBXGroup;
 			children = (
-				DC5964F01823E67F00840421 /* README */,
+				DC5964F01823E67F00840421 /* README.md */,
 				F7808AB3180C763000E63EE9 /* InfixCalculator */,
 				F7808AA1180ADE2700E63EE9 /* Game Model */,
 				F7D83D1217F9F7B800EE1AB2 /* Math with Nerds */,
@@ -325,7 +325,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC5964F11823E67F00840421 /* README in Resources */,
+				DC5964F11823E67F00840421 /* README.md in Resources */,
 				F7D83D2317F9F7B900EE1AB2 /* Main_iPad.storyboard in Resources */,
 				F7D83D2E17F9F7B900EE1AB2 /* Images.xcassets in Resources */,
 				F7D83D2017F9F7B900EE1AB2 /* Main_iPhone.storyboard in Resources */,
