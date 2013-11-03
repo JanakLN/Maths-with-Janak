@@ -27,7 +27,6 @@
 		F7D83D1917F9F7B800EE1AB2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D1817F9F7B800EE1AB2 /* main.m */; };
 		F7D83D1D17F9F7B800EE1AB2 /* DFSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D1C17F9F7B800EE1AB2 /* DFSAppDelegate.m */; };
 		F7D83D2017F9F7B900EE1AB2 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7D83D1E17F9F7B900EE1AB2 /* Main_iPhone.storyboard */; };
-		F7D83D2317F9F7B900EE1AB2 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7D83D2117F9F7B900EE1AB2 /* Main_iPad.storyboard */; };
 		F7D83D2617F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D2417F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodeld */; };
 		F7D83D2917F9F7B900EE1AB2 /* DFSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D2817F9F7B900EE1AB2 /* DFSMasterViewController.m */; };
 		F7D83D2C17F9F7B900EE1AB2 /* DFSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D83D2B17F9F7B900EE1AB2 /* DFSDetailViewController.m */; };
@@ -86,7 +85,6 @@
 		F7D83D1B17F9F7B800EE1AB2 /* DFSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFSAppDelegate.h; sourceTree = "<group>"; };
 		F7D83D1C17F9F7B800EE1AB2 /* DFSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFSAppDelegate.m; sourceTree = "<group>"; };
 		F7D83D1F17F9F7B900EE1AB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		F7D83D2217F9F7B900EE1AB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		F7D83D2517F9F7B900EE1AB2 /* Math_with_Nerds.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Math_with_Nerds.xcdatamodel; sourceTree = "<group>"; };
 		F7D83D2717F9F7B900EE1AB2 /* DFSMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFSMasterViewController.h; sourceTree = "<group>"; };
 		F7D83D2817F9F7B900EE1AB2 /* DFSMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFSMasterViewController.m; sourceTree = "<group>"; };
@@ -131,6 +129,7 @@
 		F7808AA1180ADE2700E63EE9 /* Game Model */ = {
 			isa = PBXGroup;
 			children = (
+				F7808AB3180C763000E63EE9 /* InfixCalculator */,
 				F7808AA2180ADE5E00E63EE9 /* DFSPlayer.h */,
 				F7808AA3180ADE5E00E63EE9 /* DFSPlayer.m */,
 				F7808AA5180ADEA200E63EE9 /* DFSGame.h */,
@@ -162,7 +161,6 @@
 			isa = PBXGroup;
 			children = (
 				DC5964F01823E67F00840421 /* README.md */,
-				F7808AB3180C763000E63EE9 /* InfixCalculator */,
 				F7808AA1180ADE2700E63EE9 /* Game Model */,
 				F7D83D1217F9F7B800EE1AB2 /* Math with Nerds */,
 				F7D83D3B17F9F7B900EE1AB2 /* Math with NerdsTests */,
@@ -201,7 +199,6 @@
 				F7D83D1E17F9F7B900EE1AB2 /* Main_iPhone.storyboard */,
 				F759864F181DA3BF0037DFDB /* DFSTileView.h */,
 				F7598650181DA3BF0037DFDB /* DFSTileView.m */,
-				F7D83D2117F9F7B900EE1AB2 /* Main_iPad.storyboard */,
 				F7D83D2717F9F7B900EE1AB2 /* DFSMasterViewController.h */,
 				F7D83D2817F9F7B900EE1AB2 /* DFSMasterViewController.m */,
 				F7D83D2A17F9F7B900EE1AB2 /* DFSDetailViewController.h */,
@@ -326,7 +323,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC5964F11823E67F00840421 /* README.md in Resources */,
-				F7D83D2317F9F7B900EE1AB2 /* Main_iPad.storyboard in Resources */,
 				F7D83D2E17F9F7B900EE1AB2 /* Images.xcassets in Resources */,
 				F7D83D2017F9F7B900EE1AB2 /* Main_iPhone.storyboard in Resources */,
 				F7D83D1717F9F7B800EE1AB2 /* InfoPlist.strings in Resources */,
@@ -400,14 +396,6 @@
 				F7D83D1F17F9F7B900EE1AB2 /* Base */,
 			);
 			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		F7D83D2117F9F7B900EE1AB2 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F7D83D2217F9F7B900EE1AB2 /* Base */,
-			);
-			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		F7D83D3E17F9F7B900EE1AB2 /* InfoPlist.strings */ = {
@@ -508,6 +496,7 @@
 				INFOPLIST_FILE = "Math with Nerds/Math with Nerds-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -525,6 +514,7 @@
 				INFOPLIST_FILE = "Math with Nerds/Math with Nerds-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

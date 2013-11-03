@@ -11,11 +11,14 @@
 #import "DFSGameBoard.h"
 #import "DFSTileView.h"
 
-@interface DFSDetailViewController : UIViewController <UISplitViewControllerDelegate>
+@interface DFSDetailViewController : UIViewController <UIAlertViewDelegate, UIScrollViewDelegate>
 
-@property (strong, nonatomic) DFSGame *detailItem;
+/* models */
+@property (strong, nonatomic) NSManagedObject *detailItem;
+@property (strong, nonatomic) DFSGame *game;
+
+/* views */
 @property (weak, nonatomic) IBOutlet DFSGameBoard *gameView;
-
 @property (weak, nonatomic) IBOutlet DFSTileView *tileView1;
 @property (weak, nonatomic) IBOutlet DFSTileView *tileView2;
 @property (weak, nonatomic) IBOutlet DFSTileView *tileView3;
@@ -30,7 +33,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *player2Label;
 @property (weak, nonatomic) IBOutlet UILabel *player1ScoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *player2ScoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *navLabel;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *passOrPlayButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *boardScrollView;
 
+/* check for tile drag */
 - (IBAction)handlePan:(UIPanGestureRecognizer *)recognizer;
 
 @end

@@ -10,10 +10,14 @@
 #import "DFSTile.h"
 #import "DFSEquation.h"
 
+/* constants */
 #define ROWS 15
 #define COLUMNS 15
 #define TILES 10
+#define EMPTY_SPACE 0
+#define FILLED_SPACE 1
 
+/* private interface */
 @interface DFSGame ()
 
 @property (nonatomic) int nonScoringPlayCount;
@@ -25,6 +29,7 @@
 @synthesize player1 = _player1,
             player2 = _player2,
             currentPlayer = _currentPlayer,
+            resignedPlayer = _resignedPlayer,
             tilePool = _tilePool,
             gameBoard = _gameBoard,
 		    gameIsOver = _gameIsOver,
@@ -33,6 +38,9 @@
 			lastAction = _lastAction
 ;
 
+/* 
+ * restore from serialized data 
+ */
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	if(self = [super init])
@@ -41,6 +49,7 @@
 		_player1 = [aDecoder decodeObjectForKey:@"_player1"];
 		_player2 = [aDecoder decodeObjectForKey:@"_player2"];
 		_currentPlayer = [aDecoder decodeObjectForKey:@"_currentPlayer"];
+        _resignedPlayer = [aDecoder decodeObjectForKey:@"_resignedPlayer"];
 		_tilePool = [[aDecoder decodeObjectForKey:@"_tilePool"] mutableCopy];
 		_gameBoard = [aDecoder decodeObjectForKey:@"_gameBoard"];
 		_gameIsOver = [aDecoder decodeBoolForKey:@"_gameIsOver"];
@@ -52,11 +61,15 @@
     return self;
 }
 
+/*
+ * serialize this game
+ */
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 	[aCoder encodeObject:_player1 forKey:@"_player1"];
 	[aCoder encodeObject:_player2 forKey:@"_player2"];
 	[aCoder encodeObject:_currentPlayer forKey:@"_currentPlayer"];
+    [aCoder encodeObject:_resignedPlayer forKey:@"_resignedPlayer"];
 	[aCoder encodeObject:_tilePool forKey:@"_tilePool"];
 	[aCoder encodeObject:_gameBoard forKey:@"_gameBoard"];
 	[aCoder encodeBool:_gameIsOver forKey:@"_gameIsOver"];
@@ -65,12 +78,18 @@
 	[aCoder encodeObject:_lastAction forKey:@"_lastAction"];
 }
 
+/*
+ * save the last action
+ */
 - (void)saveAction:(NSString *)action
 {
 	_lastUpdate = [NSDate date];
 	_lastAction = action;
 }
 
+/*
+ * initialize a new game
+ */
 - (id)initNewGameWithPayer1:(DFSPlayer *)player1 andPlayer2:(DFSPlayer *)player2
 {
 	if(self = [super init]){
@@ -183,29 +202,48 @@
 	return self;
 }
 
+/*
+ * this games description
+ */
 - (NSString *)description
 {
 	return self.lastAction;
 }
 
+/*
+ * check for game ending condition
+ */
 - (void)checkForGameEnd
 {
-	// game ended due to non scoring play count
-	if (self.nonScoringPlayCount > 2) {
+    // game ended because a player resigned
+    if (self.resignedPlayer) {
+        self.gameIsOver = YES;
+		[self saveAction:[NSString stringWithFormat:@"Game over, %@ won!", self.player2 == self.resignedPlayer ? self.player1 : self.player2 ]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Game Ended" object:self userInfo:[NSDictionary dictionaryWithObject:@"PlayerResigned" forKey:@"Cause"]];
+        return;
+    }
+    
+	// game ended due to non scoring play count (allow 4)
+	if (self.nonScoringPlayCount > 4) {
 		self.gameIsOver = YES;
+		[self saveAction:[NSString stringWithFormat:@"Game over, %@ won!", self.player1.score > self.player2.score ? self.player1 : self.player2 ]];
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Game Ended" object:self userInfo:[NSDictionary dictionaryWithObject:@"NonScoringPlayCount" forKey:@"Cause"]];
-		[self saveAction:@"Game ended"];
+        return;
 	}
 		
 	// game ended due to tile pool exhaustion
 	if (self.currentPlayer.tileSet.count == 0) {
 		self.gameIsOver = YES;
+        [self saveAction:[NSString stringWithFormat:@"Game over, %@ won!", self.player1.score > self.player2.score ? self.player1 : self.player2 ]];
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Game Ended" object:self userInfo:[NSDictionary dictionaryWithObject:@"LastTilePlayed" forKey:@"Cause"]];
-		[self saveAction:@"Game ended"];
+        return;
 	}
 	
 }
 
+/*
+ * switch turn
+ */
 - (void)switchPlayers
 {
 	// swap current player
@@ -219,17 +257,24 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"Current Player Changed" object:self];
 }
 
+/*
+ * place a tile on the board for the player 
+ */
 - (BOOL)player:(DFSPlayer *)player placeTile:(DFSTile *)tile onSpace:(DFSBoardSpace *)space
 {
-
+    // make sure the space is not already occupied
 	if(!space.tile){
 		space.tile = tile;
 		[player.tileSet removeObject:tile];
 		return YES;
 	}
+    
 	return NO;
 }
 
+/*
+ * recall all placed tiles back into the players tray
+ */
 - (BOOL)recallTilesForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
 {
 	// get all placed tiles, check row and column
@@ -243,6 +288,8 @@
 		}
 	}
 	
+    // move the tiles from the board to the player
+    // add to player first or the tiles memory will get reclaimed
 	for (DFSBoardSpace *space in usedSpaces) {
 		[player.tileSet addObject:space.tile];
 		space.tile = nil;
@@ -251,6 +298,9 @@
 	return YES;
 }
 
+/*
+ * recall a single tile from the board back to the players tray
+ */
 - (BOOL)recallTile:(DFSTile *)tile forPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
 {
 	// get all placed tiles, check row and column
@@ -264,6 +314,8 @@
 		}
 	}
 	
+    // move the tiles from the board to the player
+    // add to player first or the tiles memory will get reclaimed
 	for (DFSBoardSpace *space in usedSpaces) {
 		if (space.tile == tile) {
 			[player.tileSet addObject:space.tile];
@@ -277,13 +329,16 @@
 	return NO;
 }
 
+/*
+ * player passes
+ */
 - (BOOL)passTurnForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
 {
 	if (self.gameIsOver) return NO;
 	
 	// must be this players turn
 	if (player != self.currentPlayer) {
-		*errorString = @"You are not the current player";
+		*errorString = @"It's not your turn!";
 		return NO;
 	} else {
 		[self saveAction:[NSString stringWithFormat:@"%@ passed", self.currentPlayer]];
@@ -298,13 +353,16 @@
 	return YES;
 }
 
+/*
+ * swap all of the players tiles for new ones
+ */
 - (BOOL)swapTiles:(NSArray *)tiles ForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
 {
 	if (self.gameIsOver) return NO;
 
 	// must be this players turn
 	if (player != self.currentPlayer) {
-		*errorString = @"You are not the current player";
+		*errorString = @"It's not your turn!";
 		return NO;
 	}
 	
@@ -338,14 +396,14 @@
 	return YES;
 }
 
-#define EMPTY_SPACE 0
-#define FILLED_SPACE 1
-
+/*
+ * determine all the new equations formed from the current
+ * tile placement
+ */
 - (NSArray *)getAllEquations
 {
 	NSMutableArray *equations = [[NSMutableArray alloc] init];
 	int lastSpace = EMPTY_SPACE;
-	
 	DFSEquation *eq = nil;
 	
 	// get the rows
@@ -410,21 +468,25 @@
 	return [equations copy];
 }
 
+/*
+ * play the equations made
+ */
 - (BOOL)completeTurnForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
 {
 	if (self.gameIsOver) return NO;
 
 	// must be this players turn
 	if (player != self.currentPlayer) {
-		*errorString = @"You are not the current player";
+		*errorString = @"It's not your turn!";
 		return NO;
 	}
 	
 	// validate tile placement
 	// center space used
-	if ([self.gameBoard objectAtRow:7 andColumn:7] == [NSNull null]) {
+    DFSBoardSpace *centerSpace = [self.gameBoard objectAtRow:7 andColumn:7];
+	if (!centerSpace.tile) {
 		*errorString = @"You must use the center space on the first turn";
-		return NO;
+		//return NO;
 	}
 	// get all placed tiles, check row and column
 	NSMutableArray *usedSpaces = [[NSMutableArray alloc] init];
@@ -532,8 +594,9 @@
 			}
 		}
 	}
+    // found an invalid equation, just report the first one as the error
 	if(badEquations.count > 0){
-		*errorString = [badEquations.description stringByAppendingString:@" are invalid!"];
+		*errorString = [[[badEquations anyObject] description] stringByAppendingString:@" is invalid!"];
 		return NO;
 	}
 	
@@ -574,6 +637,41 @@
 	[self switchPlayers];
 	
 	return YES;
+}
+
+/*
+ * check to see if the player has placed any tiles
+ */
+- (BOOL)hasPlacedTiles
+{
+    for (int row=0; row<ROWS; row++) {
+		for (int col=0; col<COLUMNS; col++) {
+			id object = [self.gameBoard objectAtRow:row andColumn:col];
+			if([object isKindOfClass:[DFSBoardSpace class]] && !((DFSBoardSpace *)object).locked && ((DFSBoardSpace *)object).tile){
+				return YES;
+			}
+		}
+	}
+    return NO;
+}
+
+/*
+ * player gives up
+ */
+- (BOOL)resignGameByPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
+{
+    if (self.gameIsOver) return NO;
+    
+    // must be this players turn
+	if (player != self.currentPlayer) {
+		*errorString = @"You are not the current player";
+		return NO;
+	}
+    
+    self.resignedPlayer = player;
+    [self checkForGameEnd];
+    
+    return YES;
 }
 
 @end

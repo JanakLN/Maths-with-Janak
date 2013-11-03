@@ -28,19 +28,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="2pz-XF-uhl" style="IBUITableViewCellStyleDefault" id="m0d-ak-lc9">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="2pz-XF-uhl" detailTextLabel="h7d-xt-7Pu" style="IBUITableViewCellStyleSubtitle" id="m0d-ak-lc9">
                                 <rect key="frame" x="0.0" y="119" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m0d-ak-lc9" id="2hF-g7-Pth">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2pz-XF-uhl">
-                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2pz-XF-uhl">
+                                            <rect key="frame" x="15" y="3" width="34" height="22"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h7d-xt-7Pu">
+                                            <rect key="frame" x="15" y="25" width="43" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -57,6 +64,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Your Games" id="tQt-TN-PWz">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="ttw-WM-K1q"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="yZc-2p-Vbr"/>
                     </navigationItem>
                 </tableViewController>
@@ -81,90 +89,80 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iB4-nQ-Ob0" customClass="DFSTileView">
-                                        <rect key="frame" x="39" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="8" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="rMS-uj-rLs" appends="YES" id="8Ew-Je-K7B"/>
                                         </connections>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M5o-7p-0i2" customClass="DFSTileView">
-                                        <rect key="frame" x="8" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="39" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="mTo-7W-eLI" appends="YES" id="xZe-ng-2Me"/>
                                         </connections>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GEf-wV-kNp" customClass="DFSTileView">
-                                        <rect key="frame" x="70" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="70" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="64U-DI-LqQ" appends="YES" id="JP1-UM-7gv"/>
                                         </connections>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ND6-ag-cMl" customClass="DFSTileView">
-                                        <rect key="frame" x="101" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="101" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="SBu-3F-VtG" appends="YES" id="7We-KP-CD4"/>
                                         </connections>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yBQ-lx-XFJ" customClass="DFSTileView">
-                                        <rect key="frame" x="132" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="132" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="dGN-sN-Afc" appends="YES" id="X6k-Br-yyM"/>
                                         </connections>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s5X-3r-Cmg" customClass="DFSTileView">
-                                        <rect key="frame" x="163" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="163" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="v6j-im-4IP" appends="YES" id="Lcm-ZV-0kO"/>
                                         </connections>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rhw-8W-c1b" customClass="DFSTileView">
-                                        <rect key="frame" x="194" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="194" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="ujq-fj-syK" appends="YES" id="dYm-aV-4gH"/>
                                         </connections>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XiY-3e-POK" customClass="DFSTileView">
-                                        <rect key="frame" x="225" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="225" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="lQx-AL-ad8" appends="YES" id="cBC-rU-JpD"/>
                                         </connections>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GhM-sY-fL4" customClass="DFSTileView">
-                                        <rect key="frame" x="256" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="256" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="P2V-Fb-3nq" appends="YES" id="fBy-Mz-DuS"/>
                                         </connections>
                                     </view>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uaK-Ih-8Ey" customClass="DFSTileView">
-                                        <rect key="frame" x="287" y="333" width="25" height="25"/>
+                                        <rect key="frame" x="287" y="336" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="SPk-yN-Y5G" appends="YES" id="OUb-W2-Qgj"/>
@@ -177,6 +175,11 @@
                                 <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
+                                    <barButtonItem title="Resign" id="wbY-RN-TPu">
+                                        <connections>
+                                            <action selector="resign:" destination="Ah7-4n-0Wa" id="7hK-kW-Afg"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem title="Swap" id="Mhf-JS-UdY">
                                         <connections>
                                             <action selector="swapTiles:" destination="Ah7-4n-0Wa" id="KQs-MA-5r0"/>
@@ -187,14 +190,9 @@
                                             <action selector="recallTiles:" destination="Ah7-4n-0Wa" id="sJR-cl-yZY"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Pass" id="wbY-RN-TPu">
+                                    <barButtonItem title="Pass" id="Wbz-qn-9Kh">
                                         <connections>
-                                            <action selector="pass:" destination="Ah7-4n-0Wa" id="hA8-tU-aUR"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Play" id="Wbz-qn-9Kh">
-                                        <connections>
-                                            <action selector="play:" destination="Ah7-4n-0Wa" id="lVq-go-LBL"/>
+                                            <action selector="passOrPlay:" destination="Ah7-4n-0Wa" id="5OR-Ro-c85"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Wso-TE-gub"/>
@@ -239,11 +237,25 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Detail" id="cra-N8-TIN">
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Btq-bo-Hrz"/>
+                    <navigationItem key="navigationItem" id="cra-N8-TIN">
+                        <nil key="title"/>
+                        <view key="titleView" opaque="NO" contentMode="scaleToFill" id="PQX-Wp-QHW">
+                            <rect key="frame" x="75" y="6" width="170" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="170" translatesAutoresizingMaskIntoConstraints="NO" id="IaD-AE-D9f">
+                                    <rect key="frame" x="0.0" y="0.0" width="170" height="33"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </view>
                     </navigationItem>
                     <connections>
                         <outlet property="gameView" destination="GZG-AH-Cpy" id="LWD-OM-x2o"/>
+                        <outlet property="navLabel" destination="IaD-AE-D9f" id="YzQ-K1-ipz"/>
+                        <outlet property="passOrPlayButton" destination="Wbz-qn-9Kh" id="QVt-dN-TCL"/>
                         <outlet property="player1Label" destination="1RT-62-SSH" id="BAR-bi-vwu"/>
                         <outlet property="player1ScoreLabel" destination="m2G-oM-PdY" id="DUB-Vz-IJA"/>
                         <outlet property="player2Label" destination="KD9-T3-jGi" id="aGt-Wz-Zip"/>

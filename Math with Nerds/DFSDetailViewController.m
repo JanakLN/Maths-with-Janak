@@ -9,16 +9,25 @@
 #import "DFSDetailViewController.h"
 #import "DFSGame.h"
 
+/* private interface */
 @interface DFSDetailViewController ()
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @end
 
 @implementation DFSDetailViewController
 
+@synthesize game = _game;
+
+#pragma alertview delegate
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    // go back to list
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Managing the detail item
 
-- (void)setDetailItem:(DFSGame *)newDetailItem
+- (void)setDetailItem:(NSManagedObject *)newDetailItem
 {
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
@@ -26,28 +35,28 @@
         // Update the view.
         [self configureView];
     }
-
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
 }
 
+/* set up the view to reflect the current model state */
 - (void)configureView
 {
+    self.game =  (DFSGame *)[NSKeyedUnarchiver unarchiveObjectWithData:[self.detailItem valueForKey:@"data"]];
     // Update the user interface for the detail item.
 
-	if (self.detailItem) {
-		self.gameView.game = self.detailItem;
-		self.tileView1.tile = self.detailItem.currentPlayer.tileSet[0];
-		self.tileView2.tile = self.detailItem.currentPlayer.tileSet[1];
-		self.tileView3.tile = self.detailItem.currentPlayer.tileSet[2];
-		self.tileView4.tile = self.detailItem.currentPlayer.tileSet[3];
-		self.tileView5.tile = self.detailItem.currentPlayer.tileSet[4];
-		self.tileView6.tile = self.detailItem.currentPlayer.tileSet[5];
-		self.tileView7.tile = self.detailItem.currentPlayer.tileSet[6];
-		self.tileView8.tile = self.detailItem.currentPlayer.tileSet[7];
-		self.tileView9.tile = self.detailItem.currentPlayer.tileSet[8];
-		self.tileView10.tile = self.detailItem.currentPlayer.tileSet[9];
+	if (self.game) {
+        self.navLabel.text = self.game.description;
+        self.passOrPlayButton.title = @"Pass";
+		self.gameView.game = self.game;
+		self.tileView1.tile = self.game.currentPlayer.tileSet[0];
+		self.tileView2.tile = self.game.currentPlayer.tileSet[1];
+		self.tileView3.tile = self.game.currentPlayer.tileSet[2];
+		self.tileView4.tile = self.game.currentPlayer.tileSet[3];
+		self.tileView5.tile = self.game.currentPlayer.tileSet[4];
+		self.tileView6.tile = self.game.currentPlayer.tileSet[5];
+		self.tileView7.tile = self.game.currentPlayer.tileSet[6];
+		self.tileView8.tile = self.game.currentPlayer.tileSet[7];
+		self.tileView9.tile = self.game.currentPlayer.tileSet[8];
+		self.tileView10.tile = self.game.currentPlayer.tileSet[9];
 		self.tileView1.originalFrame = self.tileView1.frame;
 		self.tileView2.originalFrame = self.tileView2.frame;
 		self.tileView3.originalFrame = self.tileView3.frame;
@@ -58,11 +67,11 @@
 		self.tileView8.originalFrame = self.tileView8.frame;
 		self.tileView9.originalFrame = self.tileView9.frame;
 		self.tileView10.originalFrame = self.tileView10.frame;
-		self.player1Label.text = self.detailItem.player1.description;
-		self.player2Label.text = self.detailItem.player2.description;
-		self.player1ScoreLabel.text = [NSString stringWithFormat:@"%d", self.detailItem.player1.score];
-		self.player2ScoreLabel.text = [NSString stringWithFormat:@"%d", self.detailItem.player2.score];
-		if (self.detailItem.currentPlayer == self.detailItem.player1) {
+		self.player1Label.text = self.game.player1.description;
+		self.player2Label.text = self.game.player2.description;
+		self.player1ScoreLabel.text = [NSString stringWithFormat:@"%d", self.game.player1.score];
+		self.player2ScoreLabel.text = [NSString stringWithFormat:@"%d", self.game.player2.score];
+		if (self.game.currentPlayer == self.game.player1) {
 			self.player1Label.font = [UIFont boldSystemFontOfSize:self.player1Label.font.pointSize];
 			self.player2Label.font = [UIFont systemFontOfSize:self.player1Label.font.pointSize];
 		} else {
@@ -71,22 +80,53 @@
 		}
 		
 	}
+    
+    // scroll view TODO
+//    self.boardScrollView.delegate = self;
+//    self.boardScrollView.maximumZoomScale = 2.0;
+//    self.boardScrollView.minimumZoomScale = 1.0;
+//    self.boardScrollView.contentSize = self.gameView.frame.size;
 }
 
-- (void)updatePlayerDisplay
+/* respnd to changes in the game model */
+- (void)updatePlayerDisplay:(NSNotification *)note
 {
-	self.player1Label.text = self.detailItem.player1.description;
-	self.player2Label.text = self.detailItem.player2.description;
-	self.player1ScoreLabel.text = [NSString stringWithFormat:@"%d", self.detailItem.player1.score];
-	self.player2ScoreLabel.text = [NSString stringWithFormat:@"%d", self.detailItem.player2.score];
-	if (self.detailItem.currentPlayer == self.detailItem.player1) {
+    // update labels
+	self.player1Label.text = self.game.player1.description;
+	self.player2Label.text = self.game.player2.description;
+	self.player1ScoreLabel.text = [NSString stringWithFormat:@"%d", self.game.player1.score];
+	self.player2ScoreLabel.text = [NSString stringWithFormat:@"%d", self.game.player2.score];
+	if (self.game.currentPlayer == self.game.player1) {
 		self.player1Label.font = [UIFont boldSystemFontOfSize:self.player1Label.font.pointSize];
 		self.player2Label.font = [UIFont systemFontOfSize:self.player1Label.font.pointSize];
 	} else {
 		self.player2Label.font = [UIFont boldSystemFontOfSize:self.player2Label.font.pointSize];
 		self.player1Label.font = [UIFont systemFontOfSize:self.player1Label.font.pointSize];
 	}
+    
+    // save game to db
+    NSNumber *status = @0;
+    if (self.game.currentPlayer == self.game.player2) {
+        status = @1;
+    }
+    if (self.game.gameIsOver) {
+        status = @2;
+    }
+    [self.detailItem setValue:[NSKeyedArchiver archivedDataWithRootObject:self.game]  forKey:@"data"];
+	[self.detailItem setValue:status forKey:@"status"];
+    [[self.detailItem managedObjectContext] save:nil];
+    
+    // game over or changed players?
+    if ([note.name isEqualToString:@"Game Ended"]) {
+        // show popup with game results
+        [[[UIAlertView alloc] initWithTitle:@"Game Over!" message:self.game.description delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else {
+        // go back to list
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
+
+/* view loaded so start observing */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -94,34 +134,21 @@
 	[self configureView];
 	
 	// attach notification listeners
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlayerDisplay) name:@"Current Player Changed" object:self.detailItem];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlayerDisplay:) name:@"Current Player Changed" object:self.game];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlayerDisplay:) name:@"Game Ended" object:self.game];
 }
 
+/* view about to unload so stop observing */
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super viewWillDisappear:animated];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Split view
-
-- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
-{
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-    self.masterPopoverController = popoverController;
-}
-
-- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{
-    // Called when the view is shown again in the split view, invalidating the button and popover controller.
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    self.masterPopoverController = nil;
 }
 
 #pragma mark - Gesture Recognizers
@@ -130,6 +157,7 @@
 	DFSTileView *view = (DFSTileView *)recognizer.view;
 	CGPoint translation;
 
+    // check the state
 	switch (recognizer.state) {
 		case UIGestureRecognizerStateEnded:
 			if (![self.gameView placeTileView:view atPoint:view.center]) {
@@ -153,40 +181,66 @@
 			[recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
 			break;
 	}
+    
+    // update button text
+    if (self.game.hasPlacedTiles) {
+        self.passOrPlayButton.title = @"Play";
+    } else {
+        self.passOrPlayButton.title = @"Pass";
+    }
 
+}
+
+#pragma mark - Scroll view delegate
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.gameView;
 }
 
 #pragma mark - button actions
 - (IBAction)swapTiles:(id)sender {
+    [self.gameView recallTiles];
+    
 	NSString *error;
-	[self.detailItem swapTiles:self.detailItem.currentPlayer.tileSet ForPlayer:self.detailItem.currentPlayer returnError:&error];
+	[self.game swapTiles:self.game.currentPlayer.tileSet ForPlayer:self.game.currentPlayer returnError:&error];
 	
-	self.tileView1.tile = self.detailItem.currentPlayer.tileSet[0];
-	self.tileView2.tile = self.detailItem.currentPlayer.tileSet[1];
-	self.tileView3.tile = self.detailItem.currentPlayer.tileSet[2];
-	self.tileView4.tile = self.detailItem.currentPlayer.tileSet[3];
-	self.tileView5.tile = self.detailItem.currentPlayer.tileSet[4];
-	self.tileView6.tile = self.detailItem.currentPlayer.tileSet[5];
-	self.tileView7.tile = self.detailItem.currentPlayer.tileSet[6];
-	self.tileView8.tile = self.detailItem.currentPlayer.tileSet[7];
-	self.tileView9.tile = self.detailItem.currentPlayer.tileSet[8];
-	self.tileView10.tile = self.detailItem.currentPlayer.tileSet[9];
+	self.tileView1.tile = self.game.currentPlayer.tileSet[0];
+	self.tileView2.tile = self.game.currentPlayer.tileSet[1];
+	self.tileView3.tile = self.game.currentPlayer.tileSet[2];
+	self.tileView4.tile = self.game.currentPlayer.tileSet[3];
+	self.tileView5.tile = self.game.currentPlayer.tileSet[4];
+	self.tileView6.tile = self.game.currentPlayer.tileSet[5];
+	self.tileView7.tile = self.game.currentPlayer.tileSet[6];
+	self.tileView8.tile = self.game.currentPlayer.tileSet[7];
+	self.tileView9.tile = self.game.currentPlayer.tileSet[8];
+	self.tileView10.tile = self.game.currentPlayer.tileSet[9];
 
 	[self.gameView setNeedsDisplay];
 }
 
 - (IBAction)recallTiles:(id)sender {
 	[self.gameView recallTiles];
+    self.passOrPlayButton.title = @"Pass";
 }
 
-- (IBAction)pass:(id)sender {
+- (IBAction)passOrPlay:(UIBarButtonItem *)sender {
 	NSString *error;
-	[self.detailItem passTurnForPlayer:self.detailItem.currentPlayer returnError:&error];
+    if ([sender.title isEqualToString:@"Pass"]) {
+        [self.game passTurnForPlayer:self.game.currentPlayer returnError:&error];
+    } else {
+        [self.game completeTurnForPlayer:self.game.currentPlayer returnError:&error];
+    }
+    if (error) {
+        self.navLabel.text = error;
+    }
 }
 
-- (IBAction)play:(id)sender {
-	NSString *error;
-	[self.detailItem completeTurnForPlayer:self.detailItem.currentPlayer returnError:&error];
+- (IBAction)resign:(id)sender {
+    NSString *error;
+	[self.game resignGameByPlayer:self.game.currentPlayer returnError:&error];
+    if (error) {
+        self.navLabel.text = error;
+    }
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "DFSBoardSpace.h"
 #import "DFSMatrix.h"
 #import "DFSTile.h"
+#import "DFSTileView.h"
 
 @interface DFSGameBoard () {
 	CGFloat motionOffsetX;
@@ -93,6 +94,9 @@
 		if (CGRectContainsPoint(test, point)) {
 			spaceRect = test;
 			space = [spaces objectAtIndex:[spaceRects indexOfObject:value]];
+            if (space.tile) {
+                return NO;
+            }
 			break;
 		}
 	}
@@ -146,62 +150,97 @@
 			DFSBoardSpace *space = [self.game.gameBoard objectAtRow:i andColumn:j];
 			CGRect r = CGRectMake(offsetX, offsetY, spaceSide, spaceSide);
 			
-			if (space.multiplier > 1) {
-				
-				if (space.appliesToWord) {
-					// set the color
-					if (space.multiplier == 2) {
-						[[UIColor redColor] setFill];
-					} else {
-						[[UIColor blueColor] setFill];
-					}
-					CGContextAddRect(context, r);
-					CGContextFillPath(context);
-					// draw the text
-					NSString *text;
-					if (space.multiplier == 2) {
-						text = [NSString stringWithFormat:@"X%@", @"\u00B2"];
-					} else {
-						text = [NSString stringWithFormat:@"X%@", @"\u00B3"];
-					}
-					CGSize size = [text sizeWithAttributes:textStyle];
-					CGRect tr = CGRectMake(r.origin.x, r.origin.y + ((r.size.height - size.height)/2), r.size.width, size.height);
-					[text drawInRect:tr withAttributes:textStyle];
-				} else {
-					if (space.multiplier == 2) {
-						[[UIColor colorWithRed:1.0 green:0.4 blue:0.4 alpha:1.0] setFill];
-					} else {
-						[[UIColor colorWithRed:0.4 green:0.8 blue:1.0 alpha:1.0] setFill];
-					}
-					CGContextAddRect(context, r);
-					CGContextFillPath(context);
-					// draw the text
-					NSString *text;
-					if (space.multiplier == 2) {
-						text = @"2X";
-					} else {
-						text = @"3X";
-					}
-					CGSize size = [text sizeWithAttributes:textStyle];
-					CGRect tr = CGRectMake(r.origin.x, r.origin.y + ((r.size.height - size.height)/2), r.size.width, size.height);
-					[text drawInRect:tr withAttributes:textStyle];
-				}
-			}
+            if (space.tile) {
+                // draw the tile
+                UIFont *font2 = [UIFont boldSystemFontOfSize:16.0];
+                NSMutableParagraphStyle *paragraphStyle2 = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+                paragraphStyle2.alignment = NSTextAlignmentCenter;
+                NSDictionary *textStyle2 = @{NSFontAttributeName: font2,
+                                             NSParagraphStyleAttributeName: paragraphStyle2,
+                                             NSForegroundColorAttributeName: [UIColor blackColor]};
+                
+                UIFont *font3 = [UIFont boldSystemFontOfSize:8.0];
+                NSMutableParagraphStyle *paragraphStyle3 = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+                paragraphStyle3.alignment = NSTextAlignmentRight;
+                NSDictionary *textStyle3 = @{NSFontAttributeName: font3,
+                                             NSParagraphStyleAttributeName: paragraphStyle3,
+                                             NSForegroundColorAttributeName: [UIColor blackColor]};
+                
+                
+                
+                // save point
+                CGContextAddRect(context, r);
+                //[[UIColor blackColor] setStroke];
+                [[UIColor colorWithRed:1.0 green:0.79 blue:0.0 alpha:1.0] setFill];
+                CGContextDrawPath(context, kCGPathFill);
+                NSString *text = space.tile.faceValue;
+                CGSize size = [text sizeWithAttributes:textStyle2];
+                CGRect tr2 = CGRectMake(r.origin.x, r.origin.y + ((r.size.height - size.height)/2), r.size.width, size.height);
+                [text drawInRect:tr2 withAttributes:textStyle2];
+                
+                NSString *text2 = [NSString stringWithFormat:@"%d", space.tile.pointValue];
+                CGRect tr3 = CGRectMake(r.origin.x + r.size.width - 17, r.origin.y + r.size.height - 12, 15, 15);
+                [text2 drawInRect:tr3 withAttributes:textStyle3];
+                
+            } else {
+                // draw the space
+                if (space.multiplier > 1) {
+                    
+                    if (space.appliesToWord) {
+                        // set the color
+                        if (space.multiplier == 2) {
+                            [[UIColor redColor] setFill];
+                        } else {
+                            [[UIColor blueColor] setFill];
+                        }
+                        CGContextAddRect(context, r);
+                        CGContextFillPath(context);
+                        // draw the text
+                        NSString *text;
+                        if (space.multiplier == 2) {
+                            text = [NSString stringWithFormat:@"X%@", @"\u00B2"];
+                        } else {
+                            text = [NSString stringWithFormat:@"X%@", @"\u00B3"];
+                        }
+                        CGSize size = [text sizeWithAttributes:textStyle];
+                        CGRect tr = CGRectMake(r.origin.x, r.origin.y + ((r.size.height - size.height)/2), r.size.width, size.height);
+                        [text drawInRect:tr withAttributes:textStyle];
+                    } else {
+                        if (space.multiplier == 2) {
+                            [[UIColor colorWithRed:1.0 green:0.4 blue:0.4 alpha:1.0] setFill];
+                        } else {
+                            [[UIColor colorWithRed:0.4 green:0.8 blue:1.0 alpha:1.0] setFill];
+                        }
+                        CGContextAddRect(context, r);
+                        CGContextFillPath(context);
+                        // draw the text
+                        NSString *text;
+                        if (space.multiplier == 2) {
+                            text = @"2X";
+                        } else {
+                            text = @"3X";
+                        }
+                        CGSize size = [text sizeWithAttributes:textStyle];
+                        CGRect tr = CGRectMake(r.origin.x, r.origin.y + ((r.size.height - size.height)/2), r.size.width, size.height);
+                        [text drawInRect:tr withAttributes:textStyle];
+                    }
+                }
 
-			// draw the center
-			if (i==7 && j==7) {
-				[[UIColor colorWithRed:1.0 green:0.4 blue:0.4 alpha:1.0] setFill];
-				CGContextAddRect(context, r);
-				CGContextFillPath(context);
-				
-				NSString *text = @"\u273B";
-				CGSize size = [text sizeWithAttributes:textStyle];
-				CGRect tr = CGRectMake(r.origin.x, r.origin.y + ((r.size.height - size.height)/2), r.size.width, size.height);
-				[text drawInRect:tr withAttributes:textStyle];
-			}
-			
-			[spaceRects addObject:[NSValue valueWithCGRect:r]];
-			[spaces addObject:space];
+                // draw the center
+                if (i==7 && j==7) {
+                    [[UIColor colorWithRed:1.0 green:0.4 blue:0.4 alpha:1.0] setFill];
+                    CGContextAddRect(context, r);
+                    CGContextFillPath(context);
+                    
+                    NSString *text = @"\u273B";
+                    CGSize size = [text sizeWithAttributes:textStyle];
+                    CGRect tr = CGRectMake(r.origin.x, r.origin.y + ((r.size.height - size.height)/2), r.size.width, size.height);
+                    [text drawInRect:tr withAttributes:textStyle];
+                }
+                
+                [spaceRects addObject:[NSValue valueWithCGRect:r]];
+                [spaces addObject:space];
+            }
 			
 			offsetX += spaceSide;
 		}
@@ -231,7 +270,8 @@
 	
 	CGContextStrokePath(context);
 
-	// draw current players tiles
+	// draw current placed tiles
+
 //	UIFont *font2 = [UIFont boldSystemFontOfSize:28.0];
 //	NSMutableParagraphStyle *paragraphStyle2 = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
 //	paragraphStyle2.alignment = NSTextAlignmentCenter;

@@ -57,7 +57,7 @@
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
     [newManagedObject setValue:[NSKeyedArchiver archivedDataWithRootObject:newGame]  forKey:@"data"];
-	[newManagedObject setValue:0 forKey:@"status"];
+	[newManagedObject setValue:@0 forKey:@"status"];
     
     // Save the context.
     NSError *error = nil;
@@ -70,6 +70,29 @@
 }
 
 #pragma mark - Table View
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    
+    return [sectionInfo indexTitle];
+}
+
+- (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName
+{
+    if ([sectionName isEqualToString:@"0"]) {
+        return @"Your turn";
+    }
+    
+    if ([sectionName isEqualToString:@"1"]) {
+        return @"Their turn";
+    }
+    
+    if ([sectionName isEqualToString:@"2"]) {
+        return @"Past games";
+    }
+    
+    return sectionName;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -121,8 +144,7 @@
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-		DFSGame *theChosenGame = (DFSGame *)[NSKeyedUnarchiver unarchiveObjectWithData:[object valueForKey:@"data"]];
-        self.detailViewController.detailItem = theChosenGame;
+        self.detailViewController.detailItem = object;
     }
 }
 
@@ -131,8 +153,7 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-		DFSGame *theChosenGame = (DFSGame *)[NSKeyedUnarchiver unarchiveObjectWithData:[object valueForKey:@"data"]];
-        [[segue destinationViewController] setDetailItem:theChosenGame];
+        [[segue destinationViewController] setDetailItem:object];
     }
 }
 
@@ -154,14 +175,14 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"status" cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -231,7 +252,8 @@
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	DFSGame *game = [NSKeyedUnarchiver unarchiveObjectWithData:(NSData *)[object valueForKey:@"data"]];
 	
-    cell.textLabel.text = game.description;
+    cell.textLabel.text = game.currentPlayer.description;
+    cell.detailTextLabel.text = game.description;
 }
 
 @end
