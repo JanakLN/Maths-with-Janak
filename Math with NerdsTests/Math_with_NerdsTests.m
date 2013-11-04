@@ -44,7 +44,7 @@
 {
 	XCTAssertTrue(player1.tileSet != nil, @"Player 1 nas no tileset");
 	
-	XCTAssertTrue(player1.tileSet.count == 7, @"Player 1 only has %d tiles, should be 7", player1.tileSet.count);
+	XCTAssertTrue(player1.tileSet.count == 10, @"Player 1 only has %d tiles, should be 10", player1.tileSet.count);
 	
 	XCTAssertTrue(player1.score == 0, @"Player 1 should have no score, has %d", player1.score);
 }
@@ -53,7 +53,7 @@
 {
 	XCTAssertTrue(player2.tileSet != nil, @"Player 2 nas no tileset");
 	
-	XCTAssertTrue(player2.tileSet.count == 7, @"Player 2 only has %d tiles, should be 7", player2.tileSet.count);
+	XCTAssertTrue(player2.tileSet.count == 10, @"Player 2 only has %d tiles, should be 10", player2.tileSet.count);
 	
 	XCTAssertTrue(player2.score == 0, @"Player 2 should have no score, has %d", player2.score);
 }
@@ -67,15 +67,15 @@
 {
 	NSString *errorString;
 	
-	NSString *oldDescription = [player1 description];
+	NSArray *oldTiles = [player1.tileSet copy];
 	int oldTilecount = game.tilePool.count;
 	
 	[game swapTiles:[player1.tileSet copy] ForPlayer:player1 returnError:&errorString];
 	
-	NSString *newDescription = [player1 description];
+	NSArray *newTiles = [player1.tileSet copy];
 	int newTilecount = game.tilePool.count;
 	
-	XCTAssertTrue(![oldDescription isEqualToString:newDescription] , @"Tiles were not swapped, %@ == %@", oldDescription, newDescription);
+	XCTAssertTrue(oldTiles != newTiles , @"Tiles were not swapped, %@ == %@", oldTiles, newTiles);
 	XCTAssertTrue(oldTilecount == newTilecount, @"Tile pool changed was %d, now is %d", oldTilecount, newTilecount);
 }
 
@@ -168,7 +168,7 @@
 	NSArray *spaces = [NSArray arrayWithObjects:sp1, sp2, sp3, sp4, sp5, sp6, sp7, sp8, sp9, nil];
 	
 	DFSEquation *equation = [[DFSEquation alloc] initWithBoardSpaces:spaces];
-	int score = 46;
+	int score = 29;
 	
 	XCTAssertTrue(equation.isValid, @"The equation should be valid");
 	XCTAssertEqual(equation.score, score, @"The equation score should be %d, was %d", score, equation.score);
@@ -223,33 +223,33 @@
 	DFSTile *t28 = [[DFSTile alloc] initWithFaceValue:@"1" andPointValue:2];
 	DFSTile *t29 = [[DFSTile alloc] initWithFaceValue:@"1" andPointValue:3];
 	
-	[game player:player1 placeTile:t01 atRow:0 andColumn:1];
-	[game player:player1 placeTile:t02 atRow:0 andColumn:2];
-	[game player:player1 placeTile:t03 atRow:0 andColumn:3];
-	[game player:player1 placeTile:t04 atRow:0 andColumn:4];
-	[game player:player1 placeTile:t05 atRow:0 andColumn:5];
-	[game player:player1 placeTile:t06 atRow:1 andColumn:3];
-	[game player:player1 placeTile:t07 atRow:2 andColumn:3];
-	[game player:player1 placeTile:t08 atRow:3 andColumn:3];
-	[game player:player1 placeTile:t09 atRow:3 andColumn:6];
-	[game player:player1 placeTile:t10 atRow:4 andColumn:2];
-	[game player:player1 placeTile:t12 atRow:4 andColumn:3];
-	[game player:player1 placeTile:t13 atRow:4 andColumn:4];
-	[game player:player1 placeTile:t14 atRow:4 andColumn:5];
-	[game player:player1 placeTile:t15 atRow:4 andColumn:6];
-	[game player:player1 placeTile:t16 atRow:5 andColumn:3];
-	[game player:player1 placeTile:t17 atRow:5 andColumn:6];
-	[game player:player1 placeTile:t18 atRow:6 andColumn:3];
-	[game player:player1 placeTile:t19 atRow:6 andColumn:6];
-	[game player:player1 placeTile:t20 atRow:7 andColumn:6];
-	[game player:player1 placeTile:t22 atRow:8 andColumn:6];
-	[game player:player1 placeTile:t23 atRow:9 andColumn:6];
-	[game player:player1 placeTile:t24 atRow:9 andColumn:7];
-	[game player:player1 placeTile:t25 atRow:9 andColumn:8];
-	[game player:player1 placeTile:t26 atRow:9 andColumn:9];
-	[game player:player1 placeTile:t27 atRow:9 andColumn:10];
-	[game player:player1 placeTile:t28 atRow:9 andColumn:11];
-	[game player:player1 placeTile:t29 atRow:9 andColumn:12];
+	[game player:player1 placeTile:t01 onSpace:[game.gameBoard objectAtRow:0 andColumn:1]];
+	[game player:player1 placeTile:t02 onSpace:[game.gameBoard objectAtRow:0 andColumn:2]];
+	[game player:player1 placeTile:t03 onSpace:[game.gameBoard objectAtRow:0 andColumn:3]];
+	[game player:player1 placeTile:t04 onSpace:[game.gameBoard objectAtRow:0 andColumn:4]];
+	[game player:player1 placeTile:t05 onSpace:[game.gameBoard objectAtRow:0 andColumn:5]];
+	[game player:player1 placeTile:t06 onSpace:[game.gameBoard objectAtRow:1 andColumn:3]];
+	[game player:player1 placeTile:t07 onSpace:[game.gameBoard objectAtRow:2 andColumn:3]];
+	[game player:player1 placeTile:t08 onSpace:[game.gameBoard objectAtRow:3 andColumn:3]];
+	[game player:player1 placeTile:t09 onSpace:[game.gameBoard objectAtRow:3 andColumn:6]];
+	[game player:player1 placeTile:t10 onSpace:[game.gameBoard objectAtRow:4 andColumn:2]];
+	[game player:player1 placeTile:t12 onSpace:[game.gameBoard objectAtRow:4 andColumn:3]];
+	[game player:player1 placeTile:t13 onSpace:[game.gameBoard objectAtRow:4 andColumn:4]];
+	[game player:player1 placeTile:t14 onSpace:[game.gameBoard objectAtRow:4 andColumn:5]];
+	[game player:player1 placeTile:t15 onSpace:[game.gameBoard objectAtRow:4 andColumn:6]];
+	[game player:player1 placeTile:t16 onSpace:[game.gameBoard objectAtRow:5 andColumn:3]];
+	[game player:player1 placeTile:t17 onSpace:[game.gameBoard objectAtRow:5 andColumn:6]];
+	[game player:player1 placeTile:t18 onSpace:[game.gameBoard objectAtRow:6 andColumn:3]];
+	[game player:player1 placeTile:t19 onSpace:[game.gameBoard objectAtRow:6 andColumn:6]];
+	[game player:player1 placeTile:t20 onSpace:[game.gameBoard objectAtRow:7 andColumn:6]];
+	[game player:player1 placeTile:t22 onSpace:[game.gameBoard objectAtRow:8 andColumn:6]];
+	[game player:player1 placeTile:t23 onSpace:[game.gameBoard objectAtRow:9 andColumn:6]];
+	[game player:player1 placeTile:t24 onSpace:[game.gameBoard objectAtRow:9 andColumn:7]];
+	[game player:player1 placeTile:t25 onSpace:[game.gameBoard objectAtRow:9 andColumn:8]];
+	[game player:player1 placeTile:t26 onSpace:[game.gameBoard objectAtRow:9 andColumn:9]];
+	[game player:player1 placeTile:t27 onSpace:[game.gameBoard objectAtRow:9 andColumn:10]];
+	[game player:player1 placeTile:t28 onSpace:[game.gameBoard objectAtRow:9 andColumn:11]];
+	[game player:player1 placeTile:t29 onSpace:[game.gameBoard objectAtRow:9 andColumn:12]];
 
 
 	NSArray *equations = [game getAllEquations];
