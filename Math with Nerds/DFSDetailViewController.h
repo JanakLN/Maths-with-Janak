@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *player2ScoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *navLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *passOrPlayButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *recallButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *boardScrollView;
 
 /* check for tile drag */

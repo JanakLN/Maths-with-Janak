@@ -10,7 +10,13 @@
 #import "DFSGame.h"
 
 /* private interface */
-@interface DFSDetailViewController ()
+@interface DFSDetailViewController () {
+    UIAlertView *resignConfirm;
+    UIAlertView *gameOver;
+    UIAlertView *swapConfirm;
+    UIAlertView *passConfirm;
+}
+
 - (void)configureView;
 @end
 
@@ -21,8 +27,55 @@
 #pragma alertview delegate
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    NSString *error;
+
+    // resign
+    if (alertView == resignConfirm) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [self.game resignGameByPlayer:self.game.currentPlayer returnError:&error];
+            if (error) {
+                self.navLabel.text = error;
+            }
+        }
+    }
+    
+    // pass
+    if (alertView == passConfirm) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [self.game passTurnForPlayer:self.game.currentPlayer returnError:&error];
+        }
+    }
+    
+    // swap - temporary until I can add a swap tiles dialog allowing selection of tiles to swap
+    if (alertView == swapConfirm) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [self.gameView recallTiles];
+            
+            [self.game swapTiles:self.game.currentPlayer.tileSet ForPlayer:self.game.currentPlayer returnError:&error];
+            
+            self.tileView1.tile = self.game.currentPlayer.tileSet[0];
+            self.tileView2.tile = self.game.currentPlayer.tileSet[1];
+            self.tileView3.tile = self.game.currentPlayer.tileSet[2];
+            self.tileView4.tile = self.game.currentPlayer.tileSet[3];
+            self.tileView5.tile = self.game.currentPlayer.tileSet[4];
+            self.tileView6.tile = self.game.currentPlayer.tileSet[5];
+            self.tileView7.tile = self.game.currentPlayer.tileSet[6];
+            self.tileView8.tile = self.game.currentPlayer.tileSet[7];
+            self.tileView9.tile = self.game.currentPlayer.tileSet[8];
+            self.tileView10.tile = self.game.currentPlayer.tileSet[9];
+            
+            [self.gameView setNeedsDisplay];
+        }
+    }
     // go back to list
-    [self.navigationController popViewControllerAnimated:YES];
+    if (alertView == gameOver) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    // show error
+    if (error) {
+        self.navLabel.text = error;
+    }
 }
 
 #pragma mark - Managing the detail item
@@ -119,7 +172,8 @@
     // game over or changed players?
     if ([note.name isEqualToString:@"Game Ended"]) {
         // show popup with game results
-        [[[UIAlertView alloc] initWithTitle:@"Game Over!" message:self.game.description delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        gameOver = [[UIAlertView alloc] initWithTitle:@"Game Over!" message:self.game.description delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [gameOver show];
     } else {
         // go back to list
         [self.navigationController popViewControllerAnimated:YES];
@@ -149,6 +203,65 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Shake handler
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self becomeFirstResponder];
+}
+
+// shuffle the tiles on the display
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (motion == UIEventSubtypeMotionShake)
+    {
+        NSString *error;
+        [self.game shuffleTilesForPlayer:self.game.currentPlayer returnError:&error];
+        if (error) {
+            self.navLabel.text = error;
+        } else {
+            [self.gameView recallTiles];
+            NSArray *tileFrames = [NSArray arrayWithObjects:
+                                  [NSValue valueWithCGRect:self.tileView1.originalFrame],
+                                  [NSValue valueWithCGRect:self.tileView2.originalFrame],
+                                  [NSValue valueWithCGRect:self.tileView3.originalFrame],
+                                  [NSValue valueWithCGRect:self.tileView4.originalFrame],
+                                  [NSValue valueWithCGRect:self.tileView5.originalFrame],
+                                  [NSValue valueWithCGRect:self.tileView6.originalFrame],
+                                  [NSValue valueWithCGRect:self.tileView7.originalFrame],
+                                  [NSValue valueWithCGRect:self.tileView8.originalFrame],
+                                  [NSValue valueWithCGRect:self.tileView9.originalFrame],
+                                  [NSValue valueWithCGRect:self.tileView10.originalFrame],
+                                  nil];
+            NSArray *tileViews = [NSArray arrayWithObjects:
+                                  self.tileView1,
+                                  self.tileView2,
+                                  self.tileView3,
+                                  self.tileView4,
+                                  self.tileView5,
+                                  self.tileView6,
+                                  self.tileView7,
+                                  self.tileView8,
+                                  self.tileView9,
+                                  self.tileView10,
+                                  nil];
+            // change original frame on each tileview to new location
+            for (int i=0; i<10; i++) {
+                DFSTileView *view = [tileViews objectAtIndex:i];
+                for (int j=0; j<10; j++) {
+                    CGRect newRect = [[tileFrames objectAtIndex:j] CGRectValue];
+                    if (view.tile == self.game.currentPlayer.tileSet[j]) {
+                        view.originalFrame = newRect;
+                    }
+                }
+            }
+            // move all the tiles
+            [self.gameView recallTiles];
+        }
+    }
 }
 
 #pragma mark - Gesture Recognizers
@@ -185,8 +298,10 @@
     // update button text
     if (self.game.hasPlacedTiles) {
         self.passOrPlayButton.title = @"Play";
+        self.recallButton.enabled = YES;
     } else {
         self.passOrPlayButton.title = @"Pass";
+        self.recallButton.enabled = NO;
     }
 
 }
@@ -199,34 +314,24 @@
 
 #pragma mark - button actions
 - (IBAction)swapTiles:(id)sender {
-    [self.gameView recallTiles];
-    
-	NSString *error;
-	[self.game swapTiles:self.game.currentPlayer.tileSet ForPlayer:self.game.currentPlayer returnError:&error];
-	
-	self.tileView1.tile = self.game.currentPlayer.tileSet[0];
-	self.tileView2.tile = self.game.currentPlayer.tileSet[1];
-	self.tileView3.tile = self.game.currentPlayer.tileSet[2];
-	self.tileView4.tile = self.game.currentPlayer.tileSet[3];
-	self.tileView5.tile = self.game.currentPlayer.tileSet[4];
-	self.tileView6.tile = self.game.currentPlayer.tileSet[5];
-	self.tileView7.tile = self.game.currentPlayer.tileSet[6];
-	self.tileView8.tile = self.game.currentPlayer.tileSet[7];
-	self.tileView9.tile = self.game.currentPlayer.tileSet[8];
-	self.tileView10.tile = self.game.currentPlayer.tileSet[9];
-
-	[self.gameView setNeedsDisplay];
+    // confirm selection
+    swapConfirm = [[UIAlertView alloc] initWithTitle:@"Swap?" message:@"Are you sure you want to swap?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [swapConfirm show];
 }
 
 - (IBAction)recallTiles:(id)sender {
 	[self.gameView recallTiles];
     self.passOrPlayButton.title = @"Pass";
+    self.recallButton.enabled = NO;
 }
 
 - (IBAction)passOrPlay:(UIBarButtonItem *)sender {
 	NSString *error;
     if ([sender.title isEqualToString:@"Pass"]) {
-        [self.game passTurnForPlayer:self.game.currentPlayer returnError:&error];
+        // confirm selection
+        passConfirm = [[UIAlertView alloc] initWithTitle:@"Pass?" message:@"Are you sure you want to pass?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        [passConfirm show];
+        
     } else {
         [self.game completeTurnForPlayer:self.game.currentPlayer returnError:&error];
     }
@@ -236,11 +341,9 @@
 }
 
 - (IBAction)resign:(id)sender {
-    NSString *error;
-	[self.game resignGameByPlayer:self.game.currentPlayer returnError:&error];
-    if (error) {
-        self.navLabel.text = error;
-    }
+    // confirm selection
+    resignConfirm = [[UIAlertView alloc] initWithTitle:@"Resign?" message:@"Are you sure you want to resign?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [resignConfirm show];
 }
 
 @end

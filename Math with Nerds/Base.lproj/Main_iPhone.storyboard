@@ -171,7 +171,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AxJ-50-tjP">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AxJ-50-tjP">
                                 <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
@@ -185,12 +185,12 @@
                                             <action selector="swapTiles:" destination="Ah7-4n-0Wa" id="KQs-MA-5r0"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Recall" id="N9d-6x-eF7">
+                                    <barButtonItem enabled="NO" title="Recall" id="N9d-6x-eF7">
                                         <connections>
                                             <action selector="recallTiles:" destination="Ah7-4n-0Wa" id="sJR-cl-yZY"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Pass" id="Wbz-qn-9Kh">
+                                    <barButtonItem title="Pass" style="done" id="Wbz-qn-9Kh">
                                         <connections>
                                             <action selector="passOrPlay:" destination="Ah7-4n-0Wa" id="5OR-Ro-c85"/>
                                         </connections>
@@ -260,6 +260,7 @@
                         <outlet property="player1ScoreLabel" destination="m2G-oM-PdY" id="DUB-Vz-IJA"/>
                         <outlet property="player2Label" destination="KD9-T3-jGi" id="aGt-Wz-Zip"/>
                         <outlet property="player2ScoreLabel" destination="BcW-fV-V7w" id="Xxh-ut-4KZ"/>
+                        <outlet property="recallButton" destination="N9d-6x-eF7" id="mbe-D2-ofC"/>
                         <outlet property="tileView1" destination="iB4-nQ-Ob0" id="hgW-kL-CL9"/>
                         <outlet property="tileView10" destination="uaK-Ih-8Ey" id="GAt-1Y-BSc"/>
                         <outlet property="tileView2" destination="M5o-7p-0i2" id="4Ad-1Q-eaY"/>

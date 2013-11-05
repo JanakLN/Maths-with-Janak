@@ -159,7 +159,7 @@
 		}
 		// 8 - -
 		for (int i=0; i<8; i++) {
-			[_tilePool addObject:[[DFSTile alloc] initWithFaceValue:@"1" andPointValue:2]];
+			[_tilePool addObject:[[DFSTile alloc] initWithFaceValue:@"-" andPointValue:2]];
 		}
 		// 4 - *
 		for (int i=0; i<4; i++) {
@@ -670,6 +670,27 @@
     
     self.resignedPlayer = player;
     [self checkForGameEnd];
+    
+    return YES;
+}
+
+/*
+ * shuffle the players tiles
+ */
+- (BOOL)shuffleTilesForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString
+{
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:player.tileSet.count];
+    
+    NSMutableArray *copy = [player.tileSet mutableCopy];
+    while ([copy count] > 0)
+    {
+        int index = arc4random() % [copy count];
+        id objectToMove = [copy objectAtIndex:index];
+        [array addObject:objectToMove];
+        [copy removeObjectAtIndex:index];
+    }
+    
+    player.tileSet = array;
     
     return YES;
 }

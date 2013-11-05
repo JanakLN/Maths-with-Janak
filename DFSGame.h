@@ -38,6 +38,7 @@
 - (BOOL)recallTilesForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
 - (BOOL)recallTile:(DFSTile *)tile forPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
 - (BOOL)resignGameByPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
+- (BOOL)shuffleTilesForPlayer:(DFSPlayer *)player returnError:(NSString **)errorString;
 
 /* game state */
 - (BOOL)hasPlacedTiles;
