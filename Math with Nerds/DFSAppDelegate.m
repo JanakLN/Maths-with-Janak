@@ -8,7 +8,8 @@
 
 #import "DFSAppDelegate.h"
 
-#import "DFSMasterViewController.h"
+#import "DFSSplashViewController.h"
+#import "TestFlight.h"
 
 @implementation DFSAppDelegate
 
@@ -18,20 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [TestFlight takeOff:@"dbfa581e-9758-4941-bdb2-912609090dbd"];
+    
     // Override point for customization after application launch.
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-	    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-	    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-	    splitViewController.delegate = (id)navigationController.topViewController;
-	    
-	    UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
-	    DFSMasterViewController *controller = (DFSMasterViewController *)masterNavigationController.topViewController;
-	    controller.managedObjectContext = self.managedObjectContext;
-	} else {
-	    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-	    DFSMasterViewController *controller = (DFSMasterViewController *)navigationController.topViewController;
-	    controller.managedObjectContext = self.managedObjectContext;
-	}
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    DFSSplashViewController *controller = (DFSSplashViewController *)navigationController.topViewController;
+    controller.managedObjectContext = self.managedObjectContext;
+
     return YES;
 }
 							

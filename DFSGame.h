@@ -12,6 +12,16 @@
 #import "DFSMatrix.h"
 #import "DFSBoardSpace.h"
 
+typedef enum {
+    DFS_CHALLENGE,
+    DFS_GAME_OVER_RESIGN,
+    DFS_GAME_OVER_PLAY,
+    DFS_GAME_OVER_PASS,
+    DFS_TILE_SWAP,
+    DFS_PASS,
+    DFS_PLAYED
+} GAME_ACTION;
+
 @interface DFSGame : NSObject <NSCoding>
 
 /* game elements */
@@ -25,10 +35,11 @@
 /* game state */
 @property (nonatomic) BOOL gameIsOver;
 @property (strong, nonatomic) NSDate *lastUpdate;
-@property (copy, nonatomic) NSString *lastAction;
+@property (strong, nonatomic) DFSPlayer *lastActionPlayer;
+@property (nonatomic) GAME_ACTION lastAction;
 
 /* initializers */
-- (id)initNewGameWithPayer1:(DFSPlayer *)player1 andPlayer2:(DFSPlayer *)player2;
+- (instancetype)initNewGameWithPayer1:(DFSPlayer *)player1 andPlayer2:(DFSPlayer *)player2;
 
 /* player actions */
 - (BOOL)player:(DFSPlayer *)player placeTile:(DFSTile *)tile onSpace:(DFSBoardSpace *)space;

@@ -13,8 +13,9 @@
 @property (nonatomic) int score;
 @property (strong, nonatomic) NSMutableArray *tileSet;
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *gameCenterID;
 
-- (id)initWithName:(NSString *)name andScore:(int)score andTileSet:(NSMutableArray *)tileSet;
-- (id)init;
+- (instancetype)initWithGameCenterID:(NSString *)gameCenterID andScore:(int)score andTileSet:(NSMutableArray *)tileSet;
+- (instancetype)init;
 
 @end

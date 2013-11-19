@@ -16,7 +16,7 @@
 @property (nonatomic) int multiplier;
 @property (nonatomic) BOOL appliesToWord;
 
-- (id)initWithMultiplier:(int)multiplier andApplysToWord:(BOOL)appliesToWord;
-- (id)init;
+- (instancetype)initWithMultiplier:(int)multiplier andApplysToWord:(BOOL)appliesToWord;
+- (instancetype)init;
 
 @end

@@ -13,6 +13,6 @@
 @property (nonatomic) NSString *faceValue;
 @property (nonatomic) int pointValue;
 
-- (id)initWithFaceValue:(NSString *)faceValue andPointValue:(int)pointValue;
+- (instancetype)initWithFaceValue:(NSString *)faceValue andPointValue:(int)pointValue;
 
 @end

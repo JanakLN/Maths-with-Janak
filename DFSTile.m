@@ -10,9 +10,7 @@
 
 @implementation DFSTile
 
-@synthesize faceValue = _faceValue, pointValue = _pointValue;
-
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		_faceValue = [aDecoder decodeObjectForKey:@"_faceValue"];
@@ -27,7 +25,7 @@
 	[aCoder encodeInt:_pointValue forKey:@"_pointValue"];
 }
 
-- (id)initWithFaceValue:(NSString *)faceValue andPointValue:(int)pointValue
+- (instancetype)initWithFaceValue:(NSString *)faceValue andPointValue:(int)pointValue
 {
 	if(self = [super init]){
 		_faceValue = faceValue;

@@ -10,14 +10,13 @@
 
 @implementation DFSPlayer
 
-@synthesize score = _score, tileSet = _tileSet, name = _name;
-
--(id)initWithCoder:(NSCoder *)aDecoder
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if(self = [super init]){
 		_score = [aDecoder decodeIntForKey:@"_score"];
 		_tileSet = [aDecoder decodeObjectForKey:@"_tileSet"];
-		_name = [aDecoder decodeObjectForKey:@"_name"];
+		_gameCenterID = [aDecoder decodeObjectForKey:@"_gameCenterID"];
+        _name = [aDecoder decodeObjectForKey:@"_name"];
 	}
 	
 	return self;
@@ -27,28 +26,29 @@
 {
 	[aCoder encodeInt:_score forKey:@"_score"];
 	[aCoder encodeObject:_tileSet forKey:@"_tileSet"];
+    [aCoder encodeObject:_gameCenterID forKey:@"_gameCenterID"];
 	[aCoder encodeObject:_name forKey:@"_name"];
 }
 
-- (id)initWithName:(NSString *)name andScore:(int)score andTileSet:(NSMutableArray *)tileSet
+- (instancetype)initWithGameCenterID:(NSString *)gameCenterID andScore:(int)score andTileSet:(NSMutableArray *)tileSet
 {
 	if(self= [super init]){
 		_score = score;
 		_tileSet = tileSet;
-		_name = name;
+		_gameCenterID = gameCenterID;
 	}
 	return self;
 }
 
-- (id)init
+- (instancetype)init
 {
-	return [self initWithName:@"Player" andScore:0 andTileSet:nil];
+	return [self initWithGameCenterID:@"???" andScore:0 andTileSet:nil];
 }
 
 - (NSString *)description
 {
-	//return [NSString stringWithFormat:@"Player with score %d and tiles %@", self.score, self.tileSet];
-	return self.name;
+    NSString *description = self.gameCenterID ? self.name : @"Auto matched player";
+	return description;
 }
 
 @end

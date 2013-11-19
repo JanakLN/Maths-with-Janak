@@ -18,9 +18,7 @@
 
 @implementation DFSEquation
 
-@synthesize boardSpaces = _boardSpaces;
-
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		_boardSpaces = [aDecoder decodeObjectForKey:@"_boardSpaces"];
@@ -33,7 +31,7 @@
 	[aCoder encodeObject:_boardSpaces forKey:@"_boardSpaces"];
 }
 
-- (id)initWithBoardSpaces:(NSArray *)boardSpaces
+- (instancetype)initWithBoardSpaces:(NSArray *)boardSpaces
 {
 	if (self = [super init]) {
 		_boardSpaces = boardSpaces;
@@ -41,7 +39,7 @@
 	return self;
 }
 
-- (id)init
+- (instancetype)init
 {
 	return [self initWithBoardSpaces:nil];
 }
@@ -124,11 +122,19 @@
 		return NO;
 	}
 	
+    double leftValue;
+    double rightValue;
 	// equation left side must equal equation right side
 	NSString *left = [eq substringToIndex:equals.location];
 	NSString *right = [eq substringFromIndex:equals.location+1];
-	double leftValue = [InfixCalculator calculate:left];
-	double rightValue = [InfixCalculator calculate:right];
+    @try {
+        leftValue = [InfixCalculator calculate:left];
+        rightValue = [InfixCalculator calculate:right];
+    }
+    @catch (NSException *exception) {
+        return NO;
+    }
+	
 	if (leftValue != rightValue) {
 		return NO;
 	}

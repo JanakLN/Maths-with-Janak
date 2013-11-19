@@ -10,9 +10,7 @@
 
 @implementation DFSBoardSpace
 
-@synthesize tile = _tile, locked = _locked, multiplier = _multiplier, appliesToWord = _appliesToWord;
-
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		_tile = [aDecoder decodeObjectForKey:@"_tile"];
@@ -34,7 +32,7 @@
 /**
  * designated initializer;
  */
-- (id)initWithMultiplier:(int)multiplier andApplysToWord:(BOOL)appliesToWord
+- (instancetype)initWithMultiplier:(int)multiplier andApplysToWord:(BOOL)appliesToWord
 {
 	if(self = [super init]){
 		_multiplier = multiplier;
@@ -46,7 +44,7 @@
 /**
  * creates a default space
  */
-- (id)init
+- (instancetype)init
 {
 	return [self initWithMultiplier:1 andApplysToWord:NO];
 }

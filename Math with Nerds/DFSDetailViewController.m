@@ -22,8 +22,6 @@
 
 @implementation DFSDetailViewController
 
-@synthesize game = _game;
-
 #pragma alertview delegate
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -53,16 +51,16 @@
             
             [self.game swapTiles:self.game.currentPlayer.tileSet ForPlayer:self.game.currentPlayer returnError:&error];
             
-            self.tileView1.tile = self.game.currentPlayer.tileSet[0];
-            self.tileView2.tile = self.game.currentPlayer.tileSet[1];
-            self.tileView3.tile = self.game.currentPlayer.tileSet[2];
-            self.tileView4.tile = self.game.currentPlayer.tileSet[3];
-            self.tileView5.tile = self.game.currentPlayer.tileSet[4];
-            self.tileView6.tile = self.game.currentPlayer.tileSet[5];
-            self.tileView7.tile = self.game.currentPlayer.tileSet[6];
-            self.tileView8.tile = self.game.currentPlayer.tileSet[7];
-            self.tileView9.tile = self.game.currentPlayer.tileSet[8];
-            self.tileView10.tile = self.game.currentPlayer.tileSet[9];
+            self.tileView1.tile = self.game.currentPlayer.tileSet.count > 0 ? self.game.currentPlayer.tileSet[0] : nil;
+            self.tileView2.tile = self.game.currentPlayer.tileSet.count > 1 ? self.game.currentPlayer.tileSet[1] : nil;
+            self.tileView3.tile = self.game.currentPlayer.tileSet.count > 2 ? self.game.currentPlayer.tileSet[2] : nil;
+            self.tileView4.tile = self.game.currentPlayer.tileSet.count > 3 ? self.game.currentPlayer.tileSet[3] : nil;
+            self.tileView5.tile = self.game.currentPlayer.tileSet.count > 4 ? self.game.currentPlayer.tileSet[4] : nil;
+            self.tileView6.tile = self.game.currentPlayer.tileSet.count > 5 ? self.game.currentPlayer.tileSet[5] : nil;
+            self.tileView7.tile = self.game.currentPlayer.tileSet.count > 6 ? self.game.currentPlayer.tileSet[6] : nil;
+            self.tileView8.tile = self.game.currentPlayer.tileSet.count > 7 ? self.game.currentPlayer.tileSet[7] : nil;
+            self.tileView9.tile = self.game.currentPlayer.tileSet.count > 8 ? self.game.currentPlayer.tileSet[8] : nil;
+            self.tileView10.tile = self.game.currentPlayer.tileSet.count > 9 ? self.game.currentPlayer.tileSet[9] : nil;
             
             [self.gameView setNeedsDisplay];
         }
@@ -78,38 +76,27 @@
     }
 }
 
-#pragma mark - Managing the detail item
-
-- (void)setDetailItem:(NSManagedObject *)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-        
-        // Update the view.
-        [self configureView];
-    }
-}
-
 /* set up the view to reflect the current model state */
 - (void)configureView
 {
-    self.game =  (DFSGame *)[NSKeyedUnarchiver unarchiveObjectWithData:[self.detailItem valueForKey:@"data"]];
+    //self.game =  (DFSGame *)[NSKeyedUnarchiver unarchiveObjectWithData:[self.detailItem valueForKey:@"data"]];
+    self.game = (DFSGame *)[NSKeyedUnarchiver unarchiveObjectWithData:self.match.matchData];
+    
     // Update the user interface for the detail item.
-
 	if (self.game) {
         self.navLabel.text = self.game.description;
         self.passOrPlayButton.title = @"Pass";
 		self.gameView.game = self.game;
-		self.tileView1.tile = self.game.currentPlayer.tileSet[0];
-		self.tileView2.tile = self.game.currentPlayer.tileSet[1];
-		self.tileView3.tile = self.game.currentPlayer.tileSet[2];
-		self.tileView4.tile = self.game.currentPlayer.tileSet[3];
-		self.tileView5.tile = self.game.currentPlayer.tileSet[4];
-		self.tileView6.tile = self.game.currentPlayer.tileSet[5];
-		self.tileView7.tile = self.game.currentPlayer.tileSet[6];
-		self.tileView8.tile = self.game.currentPlayer.tileSet[7];
-		self.tileView9.tile = self.game.currentPlayer.tileSet[8];
-		self.tileView10.tile = self.game.currentPlayer.tileSet[9];
+		self.tileView1.tile = self.game.currentPlayer.tileSet.count > 0 ? self.game.currentPlayer.tileSet[0] : nil;
+		self.tileView2.tile = self.game.currentPlayer.tileSet.count > 1 ? self.game.currentPlayer.tileSet[1] : nil;
+		self.tileView3.tile = self.game.currentPlayer.tileSet.count > 2 ? self.game.currentPlayer.tileSet[2] : nil;
+		self.tileView4.tile = self.game.currentPlayer.tileSet.count > 3 ? self.game.currentPlayer.tileSet[3] : nil;
+		self.tileView5.tile = self.game.currentPlayer.tileSet.count > 4 ? self.game.currentPlayer.tileSet[4] : nil;
+		self.tileView6.tile = self.game.currentPlayer.tileSet.count > 5 ? self.game.currentPlayer.tileSet[5] : nil;
+		self.tileView7.tile = self.game.currentPlayer.tileSet.count > 6 ? self.game.currentPlayer.tileSet[6] : nil;
+		self.tileView8.tile = self.game.currentPlayer.tileSet.count > 7 ? self.game.currentPlayer.tileSet[7] : nil;
+		self.tileView9.tile = self.game.currentPlayer.tileSet.count > 8 ? self.game.currentPlayer.tileSet[8] : nil;
+		self.tileView10.tile = self.game.currentPlayer.tileSet.count > 9 ? self.game.currentPlayer.tileSet[9] : nil;
 		self.tileView1.originalFrame = self.tileView1.frame;
 		self.tileView2.originalFrame = self.tileView2.frame;
 		self.tileView3.originalFrame = self.tileView3.frame;
@@ -120,8 +107,28 @@
 		self.tileView8.originalFrame = self.tileView8.frame;
 		self.tileView9.originalFrame = self.tileView9.frame;
 		self.tileView10.originalFrame = self.tileView10.frame;
-		self.player1Label.text = self.game.player1.description;
-		self.player2Label.text = self.game.player2.description;
+        [GKPlayer loadPlayersForIdentifiers:@[self.game.player1.gameCenterID] withCompletionHandler:^(NSArray *players, NSError *error){
+            if (players != nil && players.count > 0) {
+                self.player1Label.text = [[players firstObject] alias];
+                self.game.player1.name = [[players firstObject] alias];
+            } else {
+                self.player1Label.text = self.game.player1.description;
+            }
+        }];
+
+        if (self.game.player2.gameCenterID) {
+            [GKPlayer loadPlayersForIdentifiers:@[self.game.player2.gameCenterID] withCompletionHandler:^(NSArray *players, NSError *error){
+                if (players != nil && [players count] > 0) {
+                    self.player2Label.text = [[players firstObject] alias];
+                    self.game.player2.name = [[players firstObject] alias];
+                } else {
+                    self.player2Label.text = self.game.player2.description;
+                }
+            }];
+        } else {
+            self.player2Label.text = self.game.player2.description;
+        }
+		//self.player2Label.text = self.game.player2.description;
 		self.player1ScoreLabel.text = [NSString stringWithFormat:@"%d", self.game.player1.score];
 		self.player2ScoreLabel.text = [NSString stringWithFormat:@"%d", self.game.player2.score];
 		if (self.game.currentPlayer == self.game.player1) {
@@ -131,6 +138,17 @@
 			self.player2Label.font = [UIFont boldSystemFontOfSize:self.player2Label.font.pointSize];
 			self.player1Label.font = [UIFont systemFontOfSize:self.player1Label.font.pointSize];
 		}
+        
+        // set buttons
+        if (![self.game.currentPlayer.gameCenterID isEqualToString:[GKLocalPlayer localPlayer].playerID]) {
+            self.resignButton.enabled = NO;
+            self.swapButton.enabled = NO;
+            self.passOrPlayButton.enabled = NO;
+        } else {
+            self.resignButton.enabled = YES;
+            self.swapButton.enabled = YES;
+            self.passOrPlayButton.enabled = YES;
+        }
 		
 	}
     
@@ -145,8 +163,25 @@
 - (void)updatePlayerDisplay:(NSNotification *)note
 {
     // update labels
-	self.player1Label.text = self.game.player1.description;
-	self.player2Label.text = self.game.player2.description;
+    [GKPlayer loadPlayersForIdentifiers:@[self.game.player1.gameCenterID] withCompletionHandler:^(NSArray *players, NSError *error){
+        if (players != nil && [players count] > 0) {
+            self.player1Label.text = [[players firstObject] alias];
+            self.game.player1.name = [[players firstObject] alias];
+        }
+    }];
+	if (self.game.player2.gameCenterID) {
+        [GKPlayer loadPlayersForIdentifiers:@[self.game.player2.gameCenterID] withCompletionHandler:^(NSArray *players, NSError *error){
+            if (players != nil) {
+                self.player2Label.text = [[players firstObject] alias];
+                self.game.player2.name = [[players firstObject] alias];
+            } else {
+                self.player2Label.text = self.game.player1.description;
+            }
+        }];
+    } else {
+        self.player2Label.text = self.game.player2.description;
+    }
+
 	self.player1ScoreLabel.text = [NSString stringWithFormat:@"%d", self.game.player1.score];
 	self.player2ScoreLabel.text = [NSString stringWithFormat:@"%d", self.game.player2.score];
 	if (self.game.currentPlayer == self.game.player1) {
@@ -157,27 +192,28 @@
 		self.player1Label.font = [UIFont systemFontOfSize:self.player1Label.font.pointSize];
 	}
     
-    // save game to db
-    NSNumber *status = @0;
-    if (self.game.currentPlayer == self.game.player2) {
-        status = @1;
-    }
-    if (self.game.gameIsOver) {
-        status = @2;
-    }
-    [self.detailItem setValue:[NSKeyedArchiver archivedDataWithRootObject:self.game]  forKey:@"data"];
-	[self.detailItem setValue:status forKey:@"status"];
-    [[self.detailItem managedObjectContext] save:nil];
+    NSData *updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:self.game];
+    NSMutableArray *nextPlayer = [self.match.participants mutableCopy];
+    [nextPlayer removeObject:self.match.currentParticipant];
+    self.match.message = self.game.description;
     
     // game over or changed players?
     if ([note.name isEqualToString:@"Game Ended"]) {
         // show popup with game results
         gameOver = [[UIAlertView alloc] initWithTitle:@"Game Over!" message:self.game.description delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [gameOver show];
+        self.match.currentParticipant.matchOutcome = GKTurnBasedMatchOutcomeQuit;
+        [self.match endMatchInTurnWithMatchData:updatedMatchData completionHandler:^(NSError *error){
+            // go back to list
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
     } else {
-        // go back to list
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.match endTurnWithNextParticipants:[nextPlayer copy] turnTimeout:0 matchData:updatedMatchData completionHandler:^(NSError *error){
+            // go back to list
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
     }
+
 }
 
 /* view loaded so start observing */

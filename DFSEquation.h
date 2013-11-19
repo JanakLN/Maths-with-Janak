@@ -12,8 +12,8 @@
 
 @interface DFSEquation : NSObject <NSCoding>
 
-- (id)initWithBoardSpaces:(NSArray *)boardSpaces;
-- (id)init;
+- (instancetype)initWithBoardSpaces:(NSArray *)boardSpaces;
+- (instancetype)init;
 
 - (void)addSpace:(DFSBoardSpace *)newSpace;
 

@@ -20,28 +20,16 @@
 /* private interface */
 @interface DFSGame ()
 
-@property (nonatomic) int nonScoringPlayCount;
+@property (assign, nonatomic) int nonScoringPlayCount;
 
 @end
 
 @implementation DFSGame
 
-@synthesize player1 = _player1,
-            player2 = _player2,
-            currentPlayer = _currentPlayer,
-            resignedPlayer = _resignedPlayer,
-            tilePool = _tilePool,
-            gameBoard = _gameBoard,
-		    gameIsOver = _gameIsOver,
-			nonScoringPlayCount = _nonScoringPlayCount,
-			lastUpdate = _lastUpdate,
-			lastAction = _lastAction
-;
-
 /* 
  * restore from serialized data 
  */
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if(self = [super init])
     {
@@ -55,7 +43,8 @@
 		_gameIsOver = [aDecoder decodeBoolForKey:@"_gameIsOver"];
 		_nonScoringPlayCount = [aDecoder decodeIntForKey:@"_nonScoringPlayCount"];
 		_lastUpdate = [aDecoder decodeObjectForKey:@"_lastUpdate"];
-		_lastAction = [aDecoder decodeObjectForKey:@"_lastAction"];
+		_lastActionPlayer = [aDecoder decodeObjectForKey:@"_lastActionPlayer"];
+        _lastAction = [aDecoder decodeIntForKey:@"_lastAction"];
     }
 	
     return self;
@@ -75,22 +64,24 @@
 	[aCoder encodeBool:_gameIsOver forKey:@"_gameIsOver"];
 	[aCoder encodeInt:_nonScoringPlayCount forKey:@"_nonScoringPlayCount"];
 	[aCoder encodeObject:_lastUpdate forKey:@"_lastUpdate"];
-	[aCoder encodeObject:_lastAction forKey:@"_lastAction"];
+    [aCoder encodeObject:_lastActionPlayer forKey:@"_lastActionPlayer"];
+	[aCoder encodeInt:_lastAction forKey:@"_lastAction"];
 }
 
 /*
  * save the last action
  */
-- (void)saveAction:(NSString *)action
+- (void)saveAction:(GAME_ACTION)action forPlayer:(DFSPlayer *)player
 {
-	_lastUpdate = [NSDate date];
-	_lastAction = action;
+	self.lastUpdate = [NSDate date];
+    self.lastAction = action;
+	self.lastActionPlayer = player;
 }
 
 /*
  * initialize a new game
  */
-- (id)initNewGameWithPayer1:(DFSPlayer *)player1 andPlayer2:(DFSPlayer *)player2
+- (instancetype)initNewGameWithPayer1:(DFSPlayer *)player1 andPlayer2:(DFSPlayer *)player2
 {
 	if(self = [super init]){
 		
@@ -196,7 +187,8 @@
 		_currentPlayer = player1;
 		
 		// set last update and action
-		[self saveAction:[NSString stringWithFormat:@"%@ challenged %@ to a new game", _player1, _player2]];
+        [self saveAction:DFS_CHALLENGE forPlayer:_currentPlayer];
+		//[self saveAction:[NSString stringWithFormat:@"%@ challenged %@ to a new game", _player1, _player2]];
 		
 	}
 	return self;
@@ -207,7 +199,42 @@
  */
 - (NSString *)description
 {
-	return self.lastAction;
+    NSString *description;
+    switch (self.lastAction) {
+        case DFS_CHALLENGE:
+            description = [NSString stringWithFormat:@"%@ challenged %@ to a new game!", self.player1, self.player2 ];
+            break;
+            
+        case DFS_GAME_OVER_PASS:
+            description = [NSString stringWithFormat:@"Game Over! %@ wins", self.player1.score > self.player2.score ? self.player1 : self.player2];
+            break;
+            
+        case DFS_GAME_OVER_PLAY:
+            description = [NSString stringWithFormat:@"Game Over! %@ wins", self.player1.score > self.player2.score ? self.player1 : self.player2];
+            break;
+            
+        case DFS_GAME_OVER_RESIGN:
+            description = [NSString stringWithFormat:@"Game Over! %@ resigned, %@ wins!", self.resignedPlayer, self.resignedPlayer == self.player1 ? self.player2 : self.player1];
+            break;
+            
+        case DFS_PASS:
+            description = [NSString stringWithFormat:@"%@ passed", self.lastActionPlayer];
+            break;
+            
+        case DFS_PLAYED:
+            description = [NSString stringWithFormat:@"%@ played", self.lastActionPlayer];
+            break;
+            
+        case DFS_TILE_SWAP:
+            description = [NSString stringWithFormat:@"%@ swapped their tiles", self.lastActionPlayer];
+            break;
+            
+        default:
+            description = @"";
+            break;
+    }
+    
+	return description;
 }
 
 /*
@@ -218,7 +245,8 @@
     // game ended because a player resigned
     if (self.resignedPlayer) {
         self.gameIsOver = YES;
-		[self saveAction:[NSString stringWithFormat:@"Game over, %@ won!", self.player2 == self.resignedPlayer ? self.player1 : self.player2 ]];
+        [self saveAction:DFS_GAME_OVER_RESIGN forPlayer:self.currentPlayer];
+
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Game Ended" object:self userInfo:[NSDictionary dictionaryWithObject:@"PlayerResigned" forKey:@"Cause"]];
         return;
     }
@@ -226,7 +254,8 @@
 	// game ended due to non scoring play count (allow 4)
 	if (self.nonScoringPlayCount > 4) {
 		self.gameIsOver = YES;
-		[self saveAction:[NSString stringWithFormat:@"Game over, %@ won!", self.player1.score > self.player2.score ? self.player1 : self.player2 ]];
+        [self saveAction:DFS_GAME_OVER_PASS forPlayer:self.currentPlayer];
+
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Game Ended" object:self userInfo:[NSDictionary dictionaryWithObject:@"NonScoringPlayCount" forKey:@"Cause"]];
         return;
 	}
@@ -234,7 +263,8 @@
 	// game ended due to tile pool exhaustion
 	if (self.currentPlayer.tileSet.count == 0) {
 		self.gameIsOver = YES;
-        [self saveAction:[NSString stringWithFormat:@"Game over, %@ won!", self.player1.score > self.player2.score ? self.player1 : self.player2 ]];
+        [self saveAction:DFS_GAME_OVER_PLAY forPlayer:self.currentPlayer];
+
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"Game Ended" object:self userInfo:[NSDictionary dictionaryWithObject:@"LastTilePlayed" forKey:@"Cause"]];
         return;
 	}
@@ -341,7 +371,7 @@
 		*errorString = @"It's not your turn!";
 		return NO;
 	} else {
-		[self saveAction:[NSString stringWithFormat:@"%@ passed", self.currentPlayer]];
+		[self saveAction:DFS_PASS forPlayer:self.currentPlayer];
 		// swap current player
 		[self switchPlayers];
 	}
@@ -385,7 +415,7 @@
 	[player.tileSet removeObjectsInArray:tiles];
 	[player.tileSet addObjectsFromArray:newTiles];
 	
-	[self saveAction:[NSString stringWithFormat:@"%@ swapped their tiles", self.currentPlayer]];
+	[self saveAction:DFS_TILE_SWAP forPlayer:self.currentPlayer];
 	// swap current player
 	[self switchPlayers];
 	
@@ -633,7 +663,7 @@
 	[self checkForGameEnd];
 	
 	// swap current player
-	[self saveAction:[NSString stringWithFormat:@"%@ played %@ and scored %d points", self.currentPlayer, eqString, turn_score]];
+	[self saveAction:DFS_PLAYED forPlayer:self.currentPlayer];
 	[self switchPlayers];
 	
 	return YES;

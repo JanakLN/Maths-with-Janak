@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DFSGameCenterManager.h"
 
 @class DFSDetailViewController;
 
-#import <CoreData/CoreData.h>
+@interface DFSMasterViewController : UITableViewController <GKTurnBasedMatchmakerViewControllerDelegate, DFSGameCenterManagerDelegate>
 
-@interface DFSMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
-
-@property (strong, nonatomic) DFSDetailViewController *detailViewController;
-
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) DFSGameCenterManager *gameCenterManager;
+@property (strong, nonatomic) NSArray *matches;
 
 @end

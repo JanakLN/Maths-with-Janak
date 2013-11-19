@@ -10,99 +10,160 @@
 #import "DFSDetailViewController.h"
 #import "DFSGame.h"
 #import "DFSPlayer.h"
+#import "DFSLoadingViewController.h"
 
 @interface DFSMasterViewController ()
+
+@property (strong, nonatomic) DFSLoadingViewController *loadingViewController;
+@property (strong, nonatomic) DFSDetailViewController *detailViewController;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 @implementation DFSMasterViewController
 
-- (void)awakeFromNib
+- (DFSLoadingViewController *)loadingViewController
 {
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-	    self.clearsSelectionOnViewWillAppear = NO;
-	    self.preferredContentSize = CGSizeMake(320.0, 600.0);
-	}
-    [super awakeFromNib];
+    if (!_loadingViewController) _loadingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoadingVC"];
+    
+    return _loadingViewController;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-	self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
+    
+	// set up the navigation bar
+    self.title = [NSString stringWithFormat:@"%@'s Games", [[GKLocalPlayer localPlayer] alias]];
+    
 	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 	self.navigationItem.rightBarButtonItem = addButton;
-	self.detailViewController = (DFSDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    self.gameCenterManager.delegate = self;
+    
+//    UIView *loading = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+//    loading.backgroundColor = [UIColor blackColor];
+//    
+//    [self.view addSubview:loading];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewWillAppear:animated];
+    
+    [self.view addSubview:self.loadingViewController.view];
+    
+    [self.gameCenterManager loadMatches];
+}
+
+#pragma mark - turn based match maker delegate methods
+- (void)turnBasedMatchmakerViewControllerWasCancelled:(GKTurnBasedMatchmakerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)turnBasedMatchmakerViewController:(GKTurnBasedMatchmakerViewController *)viewController didFailWithError:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)turnBasedMatchmakerViewController:(GKTurnBasedMatchmakerViewController *)viewController didFindMatch:(GKTurnBasedMatch *)match
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSArray *participants = match.participants;
+    
+	DFSPlayer *player1 = [[DFSPlayer alloc] initWithGameCenterID:match.currentParticipant.playerID andScore:0 andTileSet:nil];
+    DFSPlayer *player2;
+    if (participants.count > 1) {
+        NSString *player2ID = ((GKTurnBasedParticipant *)participants[0]).playerID == match.currentParticipant.playerID ? ((GKTurnBasedParticipant *)participants[1]).playerID : ((GKTurnBasedParticipant *)participants[0]).playerID;
+        
+        player2 = [[DFSPlayer alloc] initWithGameCenterID:player2ID andScore:0 andTileSet:nil];
+    } else {
+        player2 = [[DFSPlayer alloc] initWithGameCenterID:nil andScore:0 andTileSet:nil];
+    }
+
+	DFSGame *newGame = [[DFSGame alloc] initNewGameWithPayer1:player1 andPlayer2:player2];
+    
+    [GKPlayer loadPlayersForIdentifiers:@[[GKLocalPlayer localPlayer].playerID] withCompletionHandler:^(NSArray *players, NSError *error){
+        if (players != nil && players.count > 0) {
+            newGame.player1.name = [[players firstObject] alias];
+        } else {
+            newGame.player1.name = @"You";
+        }
+        
+        NSData *gameData = [NSKeyedArchiver archivedDataWithRootObject:newGame];
+        [match saveCurrentTurnWithMatchData:gameData completionHandler:^(NSError *error) {
+            [self performSegueWithIdentifier:@"showDetail" sender:match];
+        }];
+    }];
+
+}
+- (void)turnBasedMatchmakerViewController:(GKTurnBasedMatchmakerViewController *)viewController playerQuitForMatch:(GKTurnBasedMatch *)match
+{
+    
+}
+
+#pragma mark - Game center manager delegate methods
+- (void)gameCenterManager:(DFSGameCenterManager *)gameCenterManager didAuthenticatePlayer:(GKLocalPlayer *)player
+{
+    
+}
+- (void)gameCenterManager:(DFSGameCenterManager *)gameCenterManager failedAuthenticatePlayer:(GKLocalPlayer *)player
+{
+    
+}
+- (void)gameCenterManager:(DFSGameCenterManager *)gameCenterManager didLoadMatches:(NSArray *)matches
+{
+    self.matches = matches;
+    [self.tableView reloadData];
+    [self.loadingViewController.view removeFromSuperview];
+}
+
+- (IBAction)refreshGames:(id)sender
+{
+    [self.view addSubview:self.loadingViewController.view];
+    
+    [self.gameCenterManager loadMatches];
 }
 
 - (void)insertNewObject:(id)sender
 {
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    GKMatchRequest *request = [[GKMatchRequest alloc] init];
+    request.minPlayers = 2;
+    request.maxPlayers = 2;
     
-	DFSPlayer *player1 = [[DFSPlayer alloc] initWithName:@"Player 1" andScore:0 andTileSet:nil];
-	DFSPlayer *player2 = [[DFSPlayer alloc] initWithName:@"Player 2" andScore:0 andTileSet:nil];
-	
-	DFSGame *newGame = [[DFSGame alloc] initNewGameWithPayer1:player1 andPlayer2:player2];
-	
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSKeyedArchiver archivedDataWithRootObject:newGame]  forKey:@"data"];
-	[newManagedObject setValue:@0 forKey:@"status"];
+    GKTurnBasedMatchmakerViewController *mmvc = [[GKTurnBasedMatchmakerViewController alloc] initWithMatchRequest:request];
+    mmvc.turnBasedMatchmakerDelegate = self;
     
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-         // Replace this implementation with code to handle the error appropriately.
-         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
+    [self presentViewController:mmvc animated:YES completion:nil];
 }
 
 #pragma mark - Table View
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    
-    return [sectionInfo indexTitle];
-}
-
-- (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName
-{
-    if ([sectionName isEqualToString:@"0"]) {
+    if (section == 0) {
         return @"Your turn";
     }
     
-    if ([sectionName isEqualToString:@"1"]) {
+    if (section == 1) {
         return @"Their turn";
     }
     
-    if ([sectionName isEqualToString:@"2"]) {
+    if (section == 2) {
         return @"Past games";
     }
     
-    return sectionName;
+    return @"???";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return [[self.fetchedResultsController sections] count];
+	//return [[self.fetchedResultsController sections] count];
+    return self.matches.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-	return [sectionInfo numberOfObjects];
+    return [[self.matches objectAtIndex:section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -121,17 +182,14 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        GKTurnBasedMatch *match = [[self.matches objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
         
-        NSError *error = nil;
-        if (![context save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }   
+        [match participantQuitInTurnWithOutcome:GKTurnBasedMatchOutcomeQuit nextParticipants:match.participants turnTimeout:0 matchData:match.matchData completionHandler:^(NSError *error){
+            [[self.matches objectAtIndex:indexPath.section] removeObjectAtIndex:indexPath.row];
+            [self.tableView reloadData];
+        }];
+        
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
@@ -140,119 +198,35 @@
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        self.detailViewController.detailItem = object;
-    }
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
+        DFSDetailViewController *dest = (DFSDetailViewController *)segue.destinationViewController;
+
+        if ([sender isKindOfClass:[GKTurnBasedMatch class]]) {
+            dest.match = sender;
+        } else {
+            NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+            dest.match = (GKTurnBasedMatch *)[[self.matches objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        }
     }
-}
-
-#pragma mark - Fetched results controller
-
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Game"
-											  inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"status" cacheName:nil];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
-    
-	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
-	     // Replace this implementation with code to handle the error appropriately.
-	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
-	}
-    
-    return _fetchedResultsController;
-}    
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath
-{
-    UITableView *tableView = self.tableView;
-    
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-	DFSGame *game = [NSKeyedUnarchiver unarchiveObjectWithData:(NSData *)[object valueForKey:@"data"]];
-	
-    cell.textLabel.text = game.currentPlayer.description;
+    GKTurnBasedMatch *match = [[self.matches objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+	DFSGame *game = [NSKeyedUnarchiver unarchiveObjectWithData:(NSData *)match.matchData];
+	NSString *currentPlayer = game.currentPlayer.gameCenterID ? game.currentPlayer.gameCenterID : @"";
+    
+    [GKPlayer loadPlayersForIdentifiers:@[currentPlayer] withCompletionHandler:^(NSArray *players, NSError *error){
+        if (players != nil && players.count > 0) {
+            cell.textLabel.text = [[players firstObject] alias];
+        } else {
+            cell.textLabel.text = game.currentPlayer.description;
+        }
+        
+    }];
+    cell.textLabel.text = @"Loading...                          ";
     cell.detailTextLabel.text = game.description;
 }
 

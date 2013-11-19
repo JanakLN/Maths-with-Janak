@@ -13,7 +13,7 @@
 @property (readonly) int rows;
 @property (readonly) int columns;
 
-- (id)initWithRows:(int)rows andColumns:(int)columns;
+- (instancetype)initWithRows:(int)rows andColumns:(int)columns;
 - (id)objectAtRow:(int)row andColumn:(int)column;
 - (void)insertObject:(id)object atRow:(int)row andColumn:(int)column;
 

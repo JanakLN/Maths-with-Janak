@@ -19,7 +19,7 @@
 
 @implementation DFSMatrix
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		_rows = [aDecoder decodeIntForKey:@"_rows"];
@@ -55,7 +55,7 @@
 /**
  * initialize this matrix with number of rows and columns
  */
-- (id)initWithRows:(int)rows andColumns:(int)columns
+- (instancetype)initWithRows:(int)rows andColumns:(int)columns
 {
 	if(self = [super init]){
 		_rows = rows;

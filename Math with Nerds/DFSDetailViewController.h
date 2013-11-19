@@ -10,12 +10,13 @@
 #import "DFSGame.h"
 #import "DFSGameBoard.h"
 #import "DFSTileView.h"
+@import GameKit;
 
 @interface DFSDetailViewController : UIViewController <UIAlertViewDelegate, UIScrollViewDelegate>
 
 /* models */
-@property (strong, nonatomic) NSManagedObject *detailItem;
 @property (strong, nonatomic) DFSGame *game;
+@property (strong, nonatomic) GKTurnBasedMatch *match;
 
 /* views */
 @property (weak, nonatomic) IBOutlet DFSGameBoard *gameView;
@@ -37,6 +38,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *passOrPlayButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *recallButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *boardScrollView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *resignButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *swapButton;
 
 /* check for tile drag */
 - (IBAction)handlePan:(UIPanGestureRecognizer *)recognizer;

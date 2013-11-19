@@ -27,8 +27,6 @@
 
 @implementation DFSGameBoard
 
-@synthesize game = _game;
-
 - (void)setGame:(DFSGame *)game
 {
 	if (_game != game) {
@@ -48,7 +46,7 @@
 	spaceRects = [[NSMutableArray alloc] init];
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
