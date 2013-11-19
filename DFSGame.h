@@ -37,6 +37,8 @@ typedef enum {
 @property (strong, nonatomic) NSDate *lastUpdate;
 @property (strong, nonatomic) DFSPlayer *lastActionPlayer;
 @property (nonatomic) GAME_ACTION lastAction;
+@property (strong, nonatomic) NSString *lastEquation;
+@property (nonatomic) int lastScore;
 
 /* initializers */
 - (instancetype)initNewGameWithPayer1:(DFSPlayer *)player1 andPlayer2:(DFSPlayer *)player2;

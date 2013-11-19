@@ -222,7 +222,7 @@
             break;
             
         case DFS_PLAYED:
-            description = [NSString stringWithFormat:@"%@ played", self.lastActionPlayer];
+            description = [NSString stringWithFormat:@"%@ played %@ for %d points", self.lastActionPlayer, self.lastEquation, self.lastScore];
             break;
             
         case DFS_TILE_SWAP:
@@ -646,6 +646,8 @@
 	for (DFSBoardSpace *space in usedSpaces) {
 		space.locked = YES;
 	}
+    self.lastEquation = eqString;
+    self.lastScore = turn_score;
 	
 	// replenish the current user's tileset
 	for (int i=self.currentPlayer.tileSet.count; i < TILES; i++) {
